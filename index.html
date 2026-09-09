@@ -43,7 +43,7 @@
         .header h1 { font-size: 1.8rem; font-weight: 900; }
         .header p { font-size: 1rem; color: var(--text-muted); font-weight: 500; }
 
-        /* ---------------- العداد العائم (الصغير والثابت) ---------------- */
+        /* ---------------- العداد العائم ---------------- */
         .floating-countdown {
             position: fixed; top: 15px; left: 15px; z-index: 1000;
             background: linear-gradient(135deg, var(--brand-primary), #11047A);
@@ -229,6 +229,34 @@
             <canvas id="absencesChart"></canvas>
         </div>
 
+        <!-- متتبع المهام السريعة -->
+        <div class="schedule-container" style="margin-bottom: 35px;">
+            <h2 class="section-title" style="margin-bottom: 15px;">📝 مهام وواجبات اليوم</h2>
+            <div class="stat-card" style="flex-direction: column; align-items: stretch; gap: 15px;">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="new-task-input" placeholder="مثال: إكمال تقرير الاقتصاد الريعي..." style="flex: 1; padding: 10px 15px; border-radius: 12px; border: 1px solid var(--border-light); background: var(--input-bg); color: var(--text-main); font-family: 'Tajawal'; outline: none; font-weight: 700;">
+                    <button class="action-btn btn-primary" onclick="addTask()">إضافة</button>
+                </div>
+                <div id="tasks-list" style="display: flex; flex-direction: column; gap: 10px; max-height: 200px; overflow-y: auto;">
+                    <!-- المهام تظهر هنا -->
+                </div>
+            </div>
+        </div>
+
+        <!-- مؤقت الدراسة -->
+        <div class="schedule-container" style="margin-bottom: 35px;">
+            <h2 class="section-title" style="margin-bottom: 15px;">⏱️ مؤقت جلسات الدراسة</h2>
+            <div class="stat-card" style="flex-direction: column; text-align: center; gap: 15px; padding: 25px;">
+                <div id="pomodoro-time" style="font-size: 3.5rem; font-weight: 900; color: var(--brand-primary); letter-spacing: 2px;">25:00</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700; margin-top: -10px; margin-bottom: 10px;">جلسة تركيز (بومودورو)</div>
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <button class="action-btn btn-primary" style="padding: 10px 20px;" onclick="startTimer()">▶️ بدء التركيز</button>
+                    <button class="action-btn" style="padding: 10px 20px;" onclick="pauseTimer()">⏸️ إيقاف</button>
+                    <button class="action-btn" style="color: var(--danger); border-color: rgba(238, 93, 80, 0.3); padding: 10px 20px;" onclick="resetTimer()">🔄 إعادة الضبط</button>
+                </div>
+            </div>
+        </div>
+
         <!-- قسم الجدول الأسبوعي -->
         <div class="schedule-container">
             <h2 class="section-title" style="margin-bottom: 15px;">📅 جدول المحاضرات</h2>
@@ -406,6 +434,7 @@
             if(currentDay > 3) currentDay = 0; 
             renderSchedule(currentDay);
             startCountdown();
+            renderTasks();
         }
 
         function saveData() {
@@ -806,6 +835,91 @@
             document.getElementById('total-absences').innerText = totalAbs;
             document.getElementById('danger-count').innerText = dangerCount;
             renderChart();
+        }
+
+        // --- متتبع المهام السريعة ---
+        let tasks = JSON.parse(localStorage.getItem('bolognaTasks')) || [];
+
+        function renderTasks() {
+            const list = document.getElementById('tasks-list');
+            list.innerHTML = '';
+            if(tasks.length === 0) {
+                list.innerHTML = '<div style="text-align:center; color:var(--text-muted); font-size: 0.85rem; font-weight:700;">لا توجد مهام مسجلة حالياً ✨</div>';
+                return;
+            }
+            tasks.forEach((task, index) => {
+                list.innerHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: var(--input-bg); padding: 12px 15px; border-radius: 12px; border: 1px solid var(--border-light); transition: 0.2s;">
+                        <div style="display: flex; align-items: center; gap: 12px; cursor: pointer; flex: 1;" onclick="toggleTask(${index})">
+                            <span style="font-size: 1.3rem;">${task.done ? '✅' : '⭕'}</span>
+                            <span style="text-decoration: ${task.done ? 'line-through' : 'none'}; color: ${task.done ? 'var(--text-muted)' : 'var(--text-main)'}; font-weight: 800; font-size: 0.95rem;">${task.text}</span>
+                        </div>
+                        <button class="step-btn" style="color: var(--danger); font-size: 1.1rem; background: rgba(238, 93, 80, 0.1);" onclick="deleteTask(${index})">🗑️</button>
+                    </div>
+                `;
+            });
+            localStorage.setItem('bolognaTasks', JSON.stringify(tasks));
+        }
+
+        function addTask() {
+            const input = document.getElementById('new-task-input');
+            if (input.value.trim() !== '') {
+                tasks.push({ text: input.value.trim(), done: false });
+                input.value = '';
+                renderTasks();
+            }
+        }
+
+        function toggleTask(index) {
+            tasks[index].done = !tasks[index].done;
+            renderTasks();
+        }
+
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            renderTasks();
+        }
+
+        // --- مؤقت بومودورو للدراسة ---
+        let studyTimerInterval;
+        let studyTimeLeft = 1500; // 25 دقيقة
+
+        function updateTimerDisplay() {
+            let minutes = Math.floor(studyTimeLeft / 60);
+            let seconds = studyTimeLeft % 60;
+            document.getElementById('pomodoro-time').innerText = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (!studyTimerInterval) {
+                document.getElementById('pomodoro-time').style.color = "var(--success)";
+                studyTimerInterval = setInterval(() => {
+                    if (studyTimeLeft > 0) {
+                        studyTimeLeft--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(studyTimerInterval);
+                        studyTimerInterval = null;
+                        document.getElementById('pomodoro-time').style.color = "var(--brand-primary)";
+                        alert("انتهت جلسة التركيز! خذ استراحة قصيرة.");
+                    }
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            clearInterval(studyTimerInterval);
+            studyTimerInterval = null;
+            document.getElementById('pomodoro-time').style.color = "var(--warning)";
+        }
+
+        function resetTimer() {
+            clearInterval(studyTimerInterval);
+            studyTimerInterval = null;
+            studyTimeLeft = 1500;
+            document.getElementById('pomodoro-time').style.color = "var(--brand-primary)";
+            updateTimerDisplay();
         }
 
         initData(); renderUI();
