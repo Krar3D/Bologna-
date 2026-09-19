@@ -44,7 +44,6 @@
         .header-text h1 { font-size: 1.8rem; font-weight: 900; }
         .header-text p { font-size: 1rem; color: var(--text-muted); font-weight: 500; }
 
-        /* ---------------- العداد المدمج (بديل العائم) ---------------- */
         .static-countdown {
             background: linear-gradient(135deg, var(--brand-primary), #11047A);
             color: white; padding: 12px 20px; border-radius: 16px;
@@ -86,6 +85,7 @@
         .lec-time { font-size: 0.85rem; color: var(--brand-primary); font-weight: 900; background: rgba(67, 24, 255, 0.1); padding: 6px 12px; border-radius: 10px; text-align: center; white-space: nowrap; }
         .lec-details { flex: 1; min-width: 150px; }
         .lec-name { font-weight: 900; font-size: 1.05rem; color: var(--text-main); margin-bottom: 4px; }
+        .lec-prof { font-size: 0.8rem; color: var(--text-muted); font-weight: 700; display: flex; align-items: center; gap: 4px; margin-bottom: 4px;}
         .lec-hall { font-size: 0.8rem; color: var(--text-muted); font-weight: 700; }
         
         .btn-quick-abs { background: rgba(238, 93, 80, 0.1); color: var(--danger); border: none; padding: 10px 14px; border-radius: 10px; font-family: 'Tajawal'; font-weight: 800; cursor: pointer; font-size: 0.85rem; transition: 0.2s; white-space: nowrap; }
@@ -142,7 +142,6 @@
         .dates-log.active { display: block; }
         .date-item { background: var(--input-bg); padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; margin-bottom: 6px; display: flex; justify-content: space-between; border: 1px solid var(--border-light); }
 
-        /* ---------------- متتبع السعي الفصلي ---------------- */
         .formative-section { display: none; margin-top: 10px; }
         .formative-section.active { display: block; animation: fadeIn 0.3s ease; }
         .formative-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
@@ -153,7 +152,6 @@
         .final-target.safe { background: rgba(1, 181, 116, 0.1); color: var(--success); border-color: rgba(1, 181, 116, 0.2); }
         .final-target.danger { background: rgba(238, 93, 80, 0.1); color: var(--danger); border-color: rgba(238, 93, 80, 0.2); }
 
-        /* النوافذ المنبثقة (Modals) */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); padding: 20px; }
         .modal-overlay.active { display: flex; }
         .modal-content { background: var(--card-bg); width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
@@ -200,7 +198,6 @@
             </div>
         </div>
 
-        <!-- العداد التنازلي المدمج -->
         <div class="static-countdown" onclick="openDateModal()" title="اضغط لتعديل الموعد">
             <div class="fc-title">⏳ للامتحانات النهائية (اضغط للتعديل)</div>
             <div class="fc-timer" id="countdown-timer">
@@ -247,12 +244,19 @@
                 <button class="action-btn btn-primary" onclick="openLectureModal()">➕ إضافة محاضرة</button>
             </div>
             
+            <!-- أزرار الشعب -->
+            <div class="schedule-tabs" style="margin-bottom: 10px; border-bottom: 1px solid var(--border-light); padding-bottom: 10px;">
+                <button class="tab-btn section-btn active" onclick="setSection('A')">شعبة (أ)</button>
+                <button class="tab-btn section-btn" onclick="setSection('B')">شعبة (ب)</button>
+            </div>
+
+            <!-- أيام الأسبوع -->
             <div class="schedule-tabs" id="schedule-tabs">
-                <button class="tab-btn" onclick="renderSchedule(0)">الأحد</button>
-                <button class="tab-btn" onclick="renderSchedule(1)">الإثنين</button>
-                <button class="tab-btn" onclick="renderSchedule(2)">الثلاثاء</button>
-                <button class="tab-btn" onclick="renderSchedule(3)">الأربعاء</button>
-                <button class="tab-btn" onclick="renderSchedule(4)">الخميس</button>
+                <button class="tab-btn day-btn" onclick="renderSchedule(0)">الأحد</button>
+                <button class="tab-btn day-btn" onclick="renderSchedule(1)">الإثنين</button>
+                <button class="tab-btn day-btn" onclick="renderSchedule(2)">الثلاثاء</button>
+                <button class="tab-btn day-btn" onclick="renderSchedule(3)">الأربعاء</button>
+                <button class="tab-btn day-btn" onclick="renderSchedule(4)">الخميس</button>
             </div>
 
             <div id="schedule-list">
@@ -275,7 +279,7 @@
         <div class="subjects-grid" id="subjects-container"></div>
 
         <div class="disclaimer">
-            ⚠️ تنبيه: يتم حفظ جميع بياناتك (الغيابات، السعي، الجدول) داخل المتصفح فقط. يرجى أخذ "نسخة احتياطية" بشكل دوري لتجنب فقدانها في حال تم مسح سجل التصفح.
+            ⚠️ تنبيه: يتم حفظ جميع بياناتك داخل المتصفح فقط. يرجى أخذ "نسخة احتياطية" بشكل دوري.
         </div>
 
     </div>
@@ -304,7 +308,6 @@
         </div>
     </div>
 
-    <!-- نافذة إضافة محاضرة للجدول -->
     <div class="modal-overlay" id="lecture-modal">
         <div class="modal-content">
             <div class="modal-title">إضافة محاضرة للجدول</div>
@@ -321,6 +324,10 @@
             <div class="form-group">
                 <label>اسم المادة</label>
                 <input type="text" id="lec-name" placeholder="مثال: اقتصاديات النقود">
+            </div>
+            <div class="form-group">
+                <label>اسم التدريسي</label>
+                <input type="text" id="lec-prof" placeholder="مثال: ا.م.د مصطفى حسين">
             </div>
             <div class="form-group">
                 <label>الوقت</label>
@@ -353,7 +360,6 @@
         </div>
     </div>
 
-    <!-- نافذة تحديد موعد الامتحان -->
     <div class="modal-overlay" id="date-modal">
         <div class="modal-content">
             <div class="modal-title">تحديد موعد الامتحانات</div>
@@ -377,6 +383,8 @@
         let examDate = localStorage.getItem('bolognaExamDate') || '2027-01-03T08:00';
         let countdownInterval;
 
+        let currentSection = localStorage.getItem('bolognaSection') || 'A';
+
         document.getElementById('limit-input').value = globalLimit;
 
         function getCurrentWeek() {
@@ -387,23 +395,64 @@
             return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
         }
 
-        let scheduleState = JSON.parse(localStorage.getItem('bolognaScheduleState')) || { week: getCurrentWeek(), clicks: [] };
+        let scheduleState = JSON.parse(localStorage.getItem('bolognaScheduleStateV2')) || { week: getCurrentWeek(), clicks: [] };
         if (scheduleState.week !== getCurrentWeek()) {
             scheduleState = { week: getCurrentWeek(), clicks: [] };
-            localStorage.setItem('bolognaScheduleState', JSON.stringify(scheduleState));
+            localStorage.setItem('bolognaScheduleStateV2', JSON.stringify(scheduleState));
         }
 
-        // جدول المحاضرات الديناميكي
-        let weeklySchedule = JSON.parse(localStorage.getItem('bolognaDynamicSchedule'));
+        // جدول المحاضرات الجديد بالقسمين
+        let weeklySchedule = JSON.parse(localStorage.getItem('bolognaDynamicScheduleV2'));
         if (!weeklySchedule) {
             weeklySchedule = {
-                0: [ { name: "نظرية اقتصادية جزئية", time: "08:30 ص - 10:30 ص", hall: "مدرج الاقتصاد" }, { name: "اللغة الإنكليزية", time: "10:30 ص - 12:30 م", hall: "مختبر الصوتيات" } ],
-                1: [ { name: "نظرية اقتصادية جزئية", time: "08:30 ص - 10:30 ص", hall: "مدرج الاقتصاد" }, { name: "تحليل الاحصاء الاقتصادي", time: "10:30 ص - 12:30 م", hall: "قاعة 3" } ],
-                2: [ { name: "نظرية اقتصادية جزئية", time: "08:30 ص - 10:30 ص", hall: "مدرج الاقتصاد" }, { name: "اساسيات علم الحاسوب", time: "10:30 ص - 12:30 م", hall: "مختبر 2" }, { name: "اقتصاديات النقود والمصارف", time: "12:30 م - 02:30 م", hall: "قاعة 1" } ],
-                3: [ { name: "نظرية اقتصادية جزئية", time: "08:30 ص - 10:30 ص", hall: "مدرج الاقتصاد" }, { name: "الأساليب الكمية والتطبيقات", time: "10:30 ص - 12:30 م", hall: "قاعة 4" } ],
-                4: []
+                'A': {
+                    0: [
+                        { name: "نظرية اقتصادية جزئية", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د مصطفى حسين عبد العالي" },
+                        { name: "تحليل الاحصاء الاقتصادي", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" },
+                        { name: "نظرية اقتصادية جزئية", time: "12:30 م - 01:30 م", hall: "القاعة الدراسية", prof: "ا.م.د مصطفى حسين عبد العالي" }
+                    ],
+                    1: [
+                        { name: "اساسيات علم الحاسوب", time: "08:30 ص - 10:30 ص", hall: "المختبر", prof: "م. احمد علاء" },
+                        { name: "تحليل الاحصاء الاقتصادي", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" },
+                        { name: "اساسيات علم الحاسوب", time: "12:30 م - 01:30 م", hall: "المختبر", prof: "م. احمد علاء" }
+                    ],
+                    2: [
+                        { name: "اللغة العربية", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "م. م رحاب هاتف طعمة" },
+                        { name: "اقتصاديات النقود والمصارف", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" },
+                        { name: "اللغة الإنكليزية", time: "12:30 م - 02:30 م", hall: "القاعة الدراسية", prof: "م. علاء کاظم کمر" }
+                    ],
+                    3: [
+                        { name: "نظرية اقتصادية جزئية", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د مصطفى حسين عبد العالي" },
+                        { name: "اقتصاديات النقود والمصارف", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" },
+                        { name: "اقتصاديات النقود والمصارف", time: "12:30 م - 01:30 م", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" }
+                    ],
+                    4: []
+                },
+                'B': {
+                    0: [
+                        { name: "تحليل الاحصاء الاقتصادي", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" },
+                        { name: "نظرية اقتصادية جزئية", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د محسن خضير عباس" },
+                        { name: "نظرية اقتصادية جزئية", time: "12:30 م - 01:30 م", hall: "القاعة الدراسية", prof: "ا.م.د محسن خضير عباس" }
+                    ],
+                    1: [
+                        { name: "تحليل الاحصاء الاقتصادي", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" },
+                        { name: "اساسيات علم الحاسوب", time: "10:30 ص - 12:30 م", hall: "المختبر", prof: "م. احمد علاء" },
+                        { name: "اساسيات علم الحاسوب", time: "12:30 م - 01:30 م", hall: "المختبر", prof: "م. احمد علاء" }
+                    ],
+                    2: [
+                        { name: "اقتصاديات النقود والمصارف", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" },
+                        { name: "اللغة الإنكليزية", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "م. علاء کاظم کمر" },
+                        { name: "اقتصاديات النقود والمصارف", time: "12:30 م - 01:30 م", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" }
+                    ],
+                    3: [
+                        { name: "اقتصاديات النقود والمصارف", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" },
+                        { name: "نظرية اقتصادية جزئية", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د محسن خضير عباس" },
+                        { name: "اللغة العربية", time: "12:30 م - 02:30 م", hall: "القاعة الدراسية", prof: "م. م رحاب هاتف طعمة" }
+                    ],
+                    4: []
+                }
             };
-            localStorage.setItem('bolognaDynamicSchedule', JSON.stringify(weeklySchedule));
+            localStorage.setItem('bolognaDynamicScheduleV2', JSON.stringify(weeklySchedule));
         }
 
         let currentActiveDay = new Date().getDay(); 
@@ -425,13 +474,17 @@
         }
 
         function initData() {
-            const v10Data = localStorage.getItem('bolognaAcademicV10');
-            if (v10Data) {
-                subjects = JSON.parse(v10Data);
+            const v11Data = localStorage.getItem('bolognaAcademicV11');
+            if (v11Data) {
+                subjects = JSON.parse(v11Data);
             } else {
-                const oldData = localStorage.getItem('bolognaAcademicV9') || localStorage.getItem('bolognaAcademicV8');
+                const oldData = localStorage.getItem('bolognaAcademicV10');
                 if(oldData) {
                     subjects = JSON.parse(oldData);
+                    // إضافة اللغة العربية للمواد إذا لم تكن موجودة عند المستخدم
+                    if(!subjects.find(s => s.name === "اللغة العربية")) {
+                        subjects.push({ id: Date.now(), name: "اللغة العربية", totalHours: 30, absenceDates: [], ects: 2, formativeTotal: 50, formativeScore: 0 });
+                    }
                 } else {
                     subjects = [
                         { id: 1, name: "نظرية اقتصادية جزئية", totalHours: 30, absenceDates: [], ects: 5, formativeTotal: 50, formativeScore: 0 },
@@ -439,20 +492,23 @@
                         { id: 3, name: "اساسيات علم الحاسوب", totalHours: 30, absenceDates: [], ects: 4, formativeTotal: 50, formativeScore: 0 },
                         { id: 4, name: "اللغة الإنكليزية", totalHours: 30, absenceDates: [], ects: 3, formativeTotal: 50, formativeScore: 0 },
                         { id: 5, name: "اقتصاديات النقود والمصارف", totalHours: 30, absenceDates: [], ects: 5, formativeTotal: 50, formativeScore: 0 },
-                        { id: 6, name: "الأساليب الكمية والتطبيقات", totalHours: 30, absenceDates: [], ects: 6, formativeTotal: 50, formativeScore: 0 }
+                        { id: 6, name: "الأساليب الكمية والتطبيقات", totalHours: 30, absenceDates: [], ects: 6, formativeTotal: 50, formativeScore: 0 },
+                        { id: 7, name: "اللغة العربية", totalHours: 30, absenceDates: [], ects: 2, formativeTotal: 50, formativeScore: 0 }
                     ];
                 }
                 saveData();
             }
-            renderSchedule(currentActiveDay);
+            
+            // تهيئة واجهة الشعبة
+            setSection(currentSection);
             startCountdown();
             renderUI();
         }
 
         function saveData() {
-            localStorage.setItem('bolognaAcademicV10', JSON.stringify(subjects));
+            localStorage.setItem('bolognaAcademicV11', JSON.stringify(subjects));
             localStorage.setItem('bolognaLimitSetting', globalLimit);
-            localStorage.setItem('bolognaDynamicSchedule', JSON.stringify(weeklySchedule));
+            localStorage.setItem('bolognaDynamicScheduleV2', JSON.stringify(weeklySchedule));
         }
 
         // --- العداد ---
@@ -512,7 +568,7 @@
                     sub.formativeScore = 0;
                 });
                 scheduleState.clicks = [];
-                localStorage.setItem('bolognaScheduleState', JSON.stringify(scheduleState));
+                localStorage.setItem('bolognaScheduleStateV2', JSON.stringify(scheduleState));
                 saveData(); renderUI();
                 renderSchedule(currentActiveDay);
                 alert('تم تصفير البوابة بنجاح.');
@@ -520,9 +576,23 @@
         }
 
         // --- الجدول الديناميكي ---
+        function setSection(sec) {
+            currentSection = sec;
+            localStorage.setItem('bolognaSection', sec);
+            
+            document.querySelectorAll('.section-btn').forEach((btn, index) => {
+                if((sec === 'A' && index === 0) || (sec === 'B' && index === 1)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            renderSchedule(currentActiveDay);
+        }
+
         function renderSchedule(dayIndex) {
             currentActiveDay = dayIndex;
-            const tabs = document.querySelectorAll('.tab-btn');
+            const tabs = document.querySelectorAll('.day-btn');
             tabs.forEach((btn, i) => {
                 if (i === dayIndex) btn.classList.add('active');
                 else btn.classList.remove('active');
@@ -531,19 +601,19 @@
             const list = document.getElementById('schedule-list');
             list.innerHTML = '';
             
-            const lectures = weeklySchedule[dayIndex] || [];
+            const lectures = weeklySchedule[currentSection][dayIndex] || [];
             if(lectures.length === 0) {
                 list.innerHTML = '<div style="text-align:center; padding: 20px; color:var(--text-muted); font-weight:bold;">لا توجد محاضرات مجدولة لهذا اليوم 🎉</div>';
                 return;
             }
 
             lectures.forEach((lec, index) => {
-                let btnId = dayIndex + "-" + lec.name + "-" + index;
+                let btnId = currentSection + "-" + dayIndex + "-" + lec.name + "-" + index;
                 let isClicked = scheduleState.clicks.includes(btnId);
                 
                 let btnHtml = isClicked 
                     ? `<button class="btn-quick-abs" disabled>✔️ تم تسجيل الغياب</button>` 
-                    : `<button class="btn-quick-abs" onclick="quickAbsence('${lec.name}', this, ${dayIndex}, ${index})">➕ تسجيل غياب</button>`;
+                    : `<button class="btn-quick-abs" onclick="quickAbsence('${lec.name}', this, '${currentSection}', ${dayIndex}, ${index})">➕ تسجيل غياب</button>`;
 
                 list.innerHTML += `
                     <div class="lecture-card">
@@ -551,6 +621,7 @@
                         <div class="lec-time" style="margin-right: 25px;">${lec.time}</div>
                         <div class="lec-details">
                             <div class="lec-name">${lec.name}</div>
+                            <div class="lec-prof">👨‍🏫 ${lec.prof || 'غير محدد'}</div>
                             <div class="lec-hall">📍 ${lec.hall}</div>
                         </div>
                         ${btnHtml}
@@ -562,6 +633,7 @@
         function openLectureModal() {
             document.getElementById('lec-day').value = currentActiveDay;
             document.getElementById('lec-name').value = '';
+            document.getElementById('lec-prof').value = '';
             document.getElementById('lec-time').value = '';
             document.getElementById('lec-hall').value = '';
             document.getElementById('lecture-modal').classList.add('active');
@@ -570,36 +642,37 @@
         function addLecture() {
             let day = parseInt(document.getElementById('lec-day').value);
             let name = document.getElementById('lec-name').value.trim();
+            let prof = document.getElementById('lec-prof').value.trim();
             let time = document.getElementById('lec-time').value.trim();
             let hall = document.getElementById('lec-hall').value.trim();
 
             if (name && time && hall) {
-                if(!weeklySchedule[day]) weeklySchedule[day] = [];
-                weeklySchedule[day].push({ name, time, hall });
+                if(!weeklySchedule[currentSection][day]) weeklySchedule[currentSection][day] = [];
+                weeklySchedule[currentSection][day].push({ name, time, hall, prof });
                 saveData();
                 closeModal('lecture-modal');
                 renderSchedule(currentActiveDay);
             } else {
-                alert("يرجى ملء جميع الحقول.");
+                alert("يرجى ملء جميع الحقول المطلوبة.");
             }
         }
 
         function deleteLecture(dayIndex, lecIndex) {
             if(confirm('هل تريد حذف هذه المحاضرة من الجدول؟')) {
-                weeklySchedule[dayIndex].splice(lecIndex, 1);
+                weeklySchedule[currentSection][dayIndex].splice(lecIndex, 1);
                 saveData();
                 renderSchedule(dayIndex);
             }
         }
 
-        function quickAbsence(subjName, btnElement, dayIndex, lecIndex) {
+        function quickAbsence(subjName, btnElement, sec, dayIndex, lecIndex) {
             const sub = subjects.find(s => s.name === subjName);
             if(sub) {
                 changeAbsence(sub.id, 1);
-                let btnId = dayIndex + "-" + subjName + "-" + lecIndex;
+                let btnId = sec + "-" + dayIndex + "-" + subjName + "-" + lecIndex;
                 if(!scheduleState.clicks.includes(btnId)) {
                     scheduleState.clicks.push(btnId);
-                    localStorage.setItem('bolognaScheduleState', JSON.stringify(scheduleState));
+                    localStorage.setItem('bolognaScheduleStateV2', JSON.stringify(scheduleState));
                 }
                 btnElement.innerHTML = '✔️ تم تسجيل الغياب';
                 btnElement.disabled = true;
@@ -638,7 +711,6 @@
             const ects = parseInt(document.getElementById('new-subj-ects').value);
             
             if(name && hours > 0 && ects > 0) {
-                // تحقق من التكرار إذا كانت إضافة جديدة أو تغيير في الاسم
                 const exists = subjects.find(s => s.name === name && s.id.toString() !== id);
                 if(exists) {
                     alert('هذه المادة موجودة مسبقاً في القائمة!');
@@ -646,7 +718,6 @@
                 }
 
                 if(id) {
-                    // تعديل
                     let sub = subjects.find(s => s.id.toString() === id);
                     if(sub) {
                         sub.name = name;
@@ -654,7 +725,6 @@
                         sub.ects = ects;
                     }
                 } else {
-                    // إضافة
                     subjects.push({ id: Date.now(), name: name, totalHours: hours, absenceDates: [], ects: ects, formativeTotal: 50, formativeScore: 0 });
                 }
                 saveData(); renderUI(); closeModal('add-modal');
@@ -670,7 +740,7 @@
             }
         }
 
-        // --- حاسبة المعدل (حفظ واسترجاع) ---
+        // --- حاسبة المعدل ---
         function openGpaModal() {
             const listDiv = document.getElementById('gpa-subjects-list');
             listDiv.innerHTML = '';
@@ -711,7 +781,7 @@
         }
 
         function exportData() {
-            const dataToExport = { version: "10", limit: globalLimit, data: subjects, schedule: weeklySchedule, gpa: gpaSavedGrades };
+            const dataToExport = { version: "11", limit: globalLimit, data: subjects, schedule: weeklySchedule, gpa: gpaSavedGrades };
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToExport));
             const a = document.createElement('a'); a.href = dataStr; a.download = "Bologna_Backup.json";
             document.body.appendChild(a); a.click(); document.body.removeChild(a);
