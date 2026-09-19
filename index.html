@@ -38,25 +38,30 @@
         .action-btn:hover { border-color: var(--brand-primary); }
         .btn-primary { background: var(--brand-primary); color: white; border: none; }
         .btn-primary:hover { opacity: 0.9; }
-        .btn-danger { background: rgba(238, 93, 80, 0.1); color: var(--danger); border: none; }
 
         .header { margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .header-text h1 { font-size: 1.8rem; font-weight: 900; }
         .header-text p { font-size: 1rem; color: var(--text-muted); font-weight: 500; }
 
-        .static-countdown {
-            background: linear-gradient(135deg, var(--brand-primary), #11047A);
-            color: white; padding: 12px 20px; border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(67, 24, 255, 0.2); display: flex; flex-direction: column;
-            align-items: center; cursor: pointer; transition: 0.3s transform; margin-bottom: 25px;
-        }
-        .static-countdown:hover { transform: scale(1.02); }
+        /* --- نظام المستويات والـ XP --- */
+        .level-container { background: var(--card-bg); padding: 15px 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid var(--border-light); }
+        .level-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 900; }
+        .level-title { color: var(--brand-primary); font-size: 1.1rem; }
+        .level-xp { color: var(--warning); font-size: 1.1rem; background: rgba(255, 206, 32, 0.1); padding: 4px 10px; border-radius: 8px; }
+        .xp-bar-bg { width: 100%; height: 12px; background: var(--bg-app); border-radius: 6px; overflow: hidden; border: 1px solid var(--border-light); }
+        .xp-bar-fill { height: 100%; background: linear-gradient(90deg, #FFCE20, #ff9d00); border-radius: 6px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        /* --- التنبيهات (الرزايل والمكافآت) --- */
+        #toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 400px; pointer-events: none; }
+        .toast { padding: 12px 20px; border-radius: 12px; font-weight: 900; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); animation: slideUp 0.3s forwards; text-align: center; font-family: 'Tajawal'; }
+        .toast.success { background: var(--success); }
+        .toast.danger { background: var(--danger); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .static-countdown { background: linear-gradient(135deg, var(--brand-primary), #11047A); color: white; padding: 12px 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(67, 24, 255, 0.2); display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.3s transform; margin-bottom: 25px; }
         .fc-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 8px; opacity: 0.9; }
         .fc-timer { display: flex; gap: 8px; }
-        .fc-box {
-            background: rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px;
-            display: flex; flex-direction: column; align-items: center; min-width: 50px; backdrop-filter: blur(5px);
-        }
+        .fc-box { background: rgba(255,255,255,0.15); border-radius: 8px; padding: 6px 10px; display: flex; flex-direction: column; align-items: center; min-width: 50px; }
         .fc-val { font-size: 1.3rem; font-weight: 900; line-height: 1; }
         .fc-label { font-size: 0.65rem; font-weight: 700; margin-top: 4px; }
 
@@ -71,13 +76,9 @@
         .icon-green { background: rgba(1, 181, 116, 0.1); color: var(--success); }
         .limit-input { width: 55px; padding: 4px; border-radius: 8px; border: 1px solid var(--border-light); font-family: 'Tajawal'; font-weight: 900; font-size: 1.1rem; text-align: center; color: var(--brand-primary); background: var(--input-bg); outline: none; }
 
-        .chart-container { background: var(--card-bg); padding: 15px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 30px; height: 250px; width: 100%; }
-
         /* ---------------- جدول المحاضرات ---------------- */
         .schedule-container { margin-bottom: 35px; }
         .schedule-tabs { display: flex; gap: 10px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px; }
-        .schedule-tabs::-webkit-scrollbar { height: 4px; }
-        .schedule-tabs::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 4px; }
         .tab-btn { background: var(--card-bg); border: 1px solid var(--border-light); padding: 8px 20px; border-radius: 12px; font-family: 'Tajawal'; font-weight: 800; cursor: pointer; color: var(--text-muted); transition: 0.3s; white-space: nowrap; }
         .tab-btn.active { background: var(--brand-primary); color: white; border-color: var(--brand-primary); box-shadow: 0 4px 10px rgba(67, 24, 255, 0.2); }
         
@@ -88,14 +89,16 @@
         .lec-prof { font-size: 0.8rem; color: var(--text-muted); font-weight: 700; display: flex; align-items: center; gap: 4px; margin-bottom: 4px;}
         .lec-hall { font-size: 0.8rem; color: var(--text-muted); font-weight: 700; }
         
-        .btn-quick-abs { background: rgba(238, 93, 80, 0.1); color: var(--danger); border: none; padding: 10px 14px; border-radius: 10px; font-family: 'Tajawal'; font-weight: 800; cursor: pointer; font-size: 0.85rem; transition: 0.2s; white-space: nowrap; }
-        .btn-quick-abs:hover:not(:disabled) { background: var(--danger); color: white; transform: translateY(-2px); }
-        .btn-quick-abs:disabled { background: rgba(1, 181, 116, 0.1) !important; color: var(--success) !important; cursor: not-allowed; transform: none; box-shadow: none; border: 1px solid rgba(1, 181, 116, 0.2); }
-        
+        .lec-actions-group { display: flex; gap: 8px; flex-wrap: wrap; }
+        .btn-quick-act { border: none; padding: 10px 14px; border-radius: 10px; font-family: 'Tajawal'; font-weight: 800; cursor: pointer; font-size: 0.85rem; transition: 0.2s; white-space: nowrap; }
+        .btn-present { background: rgba(1, 181, 116, 0.1); color: var(--success); }
+        .btn-present:hover:not(:disabled) { background: var(--success); color: white; transform: translateY(-2px); }
+        .btn-absent { background: rgba(238, 93, 80, 0.1); color: var(--danger); }
+        .btn-absent:hover:not(:disabled) { background: var(--danger); color: white; transform: translateY(-2px); }
+        .btn-quick-act:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; border: 1px solid var(--border-light); }
         .btn-delete-lec { position: absolute; top: 10px; left: 10px; background: none; border: none; color: var(--danger); font-size: 1.1rem; cursor: pointer; padding: 5px; }
 
         body.dark-mode .lecture-card { border-color: var(--border-light); background: var(--input-bg); }
-        body.dark-mode .btn-quick-abs:disabled { background: rgba(1, 181, 116, 0.15) !important; }
 
         /* ---------------- شبكة المواد ---------------- */
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
@@ -106,12 +109,10 @@
         .subject-card { background: var(--card-bg); border-radius: 20px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid transparent; display: flex; flex-direction: column; transition: 0.3s; position: relative;}
         body.dark-mode .subject-card.danger-state { background: rgba(238, 93, 80, 0.1); border-color: rgba(238, 93, 80, 0.4); }
         body:not(.dark-mode) .subject-card.danger-state { background: #fffcfc; border-color: rgba(238, 93, 80, 0.3); }
-        .subject-card.warning-state { border-color: rgba(255, 206, 32, 0.4); }
         
         .subj-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
         .subj-title { font-weight: 800; font-size: 1.1rem; line-height: 1.4; display: flex; flex-direction: column; gap: 4px; }
         .subj-ects { font-size: 0.75rem; color: var(--brand-primary); font-weight: 700; background: rgba(67, 24, 255, 0.1); padding: 2px 8px; border-radius: 6px; width: fit-content; }
-        
         .subj-actions { display: flex; gap: 5px; margin-top: 5px; }
         .btn-icon { background: none; border: none; font-size: 1.1rem; cursor: pointer; padding: 2px; }
         
@@ -122,28 +123,25 @@
         .badge-danger { background: rgba(238, 93, 80, 0.1); color: var(--danger); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
 
-        .controls-wrapper { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .hours-box { display: flex; flex-direction: column; gap: 4px; }
-        .hours-box label { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; }
-        .hours-box input { padding: 5px 8px; border-radius: 8px; border: 1px solid var(--border-light); font-family: 'Tajawal'; font-weight: 700; font-size: 0.9rem; width: 60px; color: var(--text-main); background: var(--input-bg); }
-        .stepper { display: flex; align-items: center; gap: 10px; background: var(--bg-app); padding: 5px; border-radius: 12px; }
-        .step-btn { background: var(--card-bg); border: none; width: 30px; height: 30px; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; color: var(--text-main); display: flex; justify-content: center; align-items: center; }
-        .step-val { font-size: 1.1rem; font-weight: 900; min-width: 20px; text-align: center; }
+        .controls-wrapper { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: var(--input-bg); padding: 10px; border-radius: 12px; border: 1px solid var(--border-light); }
+        .hours-box { display: flex; flex-direction: column; gap: 4px; align-items: center; }
+        .hours-box label { font-size: 0.75rem; color: var(--text-muted); font-weight: 800; }
+        .stepper { display: flex; align-items: center; gap: 10px; background: var(--card-bg); padding: 5px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); border: 1px solid var(--border-light); }
+        .step-btn { background: none; border: none; width: 25px; height: 25px; border-radius: 6px; font-size: 1.2rem; font-weight: bold; cursor: pointer; color: var(--text-main); display: flex; justify-content: center; align-items: center; }
+        .step-val { font-size: 1rem; font-weight: 900; min-width: 20px; text-align: center; }
 
         .progress-container { width: 100%; margin-bottom: 10px; }
         .progress-labels { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; margin-bottom: 6px; }
         .progress-track { width: 100%; height: 8px; background: var(--bg-app); border-radius: 4px; overflow: hidden; }
         .progress-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
 
-        .card-bottom-actions { display: flex; justify-content: space-between; margin-top: auto; border-top: 1px dashed var(--border-light); padding-top: 10px; gap: 10px; }
-        .dates-toggle-btn { background: none; border: none; color: var(--text-muted); font-family: 'Tajawal'; font-size: 0.8rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        .card-bottom-actions { display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: auto; border-top: 1px dashed var(--border-light); padding-top: 10px; gap: 10px; }
+        .dates-toggle-btn { background: none; border: none; color: var(--text-muted); font-family: 'Tajawal'; font-size: 0.8rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 5px; flex: 1; min-width: 30%; white-space: nowrap;}
         
-        .dates-log { display: none; margin-top: 10px; max-height: 120px; overflow-y: auto; }
-        .dates-log.active { display: block; }
+        .dates-log, .formative-section { display: none; margin-top: 10px; max-height: 120px; overflow-y: auto; }
+        .dates-log.active, .formative-section.active { display: block; animation: fadeIn 0.3s ease; }
         .date-item { background: var(--input-bg); padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; margin-bottom: 6px; display: flex; justify-content: space-between; border: 1px solid var(--border-light); }
-
-        .formative-section { display: none; margin-top: 10px; }
-        .formative-section.active { display: block; animation: fadeIn 0.3s ease; }
+        
         .formative-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .formative-box { background: var(--input-bg); padding: 10px; border-radius: 10px; border: 1px solid var(--border-light); text-align: center; }
         .formative-box label { display: block; font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-bottom: 5px; }
@@ -169,8 +167,6 @@
         .gpa-result-box { background: rgba(1, 181, 116, 0.1); color: var(--success); padding: 15px; border-radius: 12px; text-align: center; margin-top: 15px; display: none; }
         .gpa-result-val { font-size: 2rem; font-weight: 900; }
         
-        .disclaimer { text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 30px; font-weight: 700; }
-
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -195,6 +191,16 @@
             <div class="header-text">
                 <h1>نظام المتابعة الأكاديمية 🎓</h1>
                 <p>جامعة واسط - قسم الاقتصاد (مسار بولونيا)</p>
+            </div>
+        </div>
+
+        <div class="level-container">
+            <div class="level-header">
+                <span class="level-title" id="ui-level-title">المستوى: 1 (طالب مستجد)</span>
+                <span class="level-xp" id="ui-level-xp">0 XP</span>
+            </div>
+            <div class="xp-bar-bg">
+                <div class="xp-bar-fill" id="ui-xp-bar" style="width: 0%;"></div>
             </div>
         </div>
 
@@ -233,24 +239,17 @@
             </div>
         </div>
 
-        <div class="chart-container">
-            <canvas id="absencesChart"></canvas>
-        </div>
-
-        <!-- قسم الجدول الأسبوعي الديناميكي -->
         <div class="schedule-container">
             <div class="section-header">
                 <h2 class="section-title">📅 جدول المحاضرات</h2>
                 <button class="action-btn btn-primary" onclick="openLectureModal()">➕ إضافة محاضرة</button>
             </div>
             
-            <!-- أزرار الشعب -->
             <div class="schedule-tabs" style="margin-bottom: 10px; border-bottom: 1px solid var(--border-light); padding-bottom: 10px;">
                 <button class="tab-btn section-btn active" onclick="setSection('A')">شعبة (أ)</button>
                 <button class="tab-btn section-btn" onclick="setSection('B')">شعبة (ب)</button>
             </div>
 
-            <!-- أيام الأسبوع -->
             <div class="schedule-tabs" id="schedule-tabs">
                 <button class="tab-btn day-btn" onclick="renderSchedule(0)">الأحد</button>
                 <button class="tab-btn day-btn" onclick="renderSchedule(1)">الإثنين</button>
@@ -259,9 +258,7 @@
                 <button class="tab-btn day-btn" onclick="renderSchedule(4)">الخميس</button>
             </div>
 
-            <div id="schedule-list">
-                <!-- المحاضرات تظهر هنا -->
-            </div>
+            <div id="schedule-list"></div>
         </div>
 
         <div class="section-header">
@@ -277,30 +274,17 @@
         </div>
         
         <div class="subjects-grid" id="subjects-container"></div>
-
-        <div class="disclaimer">
-            ⚠️ تنبيه: يتم حفظ جميع بياناتك داخل المتصفح فقط. يرجى أخذ "نسخة احتياطية" بشكل دوري.
-        </div>
-
     </div>
 
-    <!-- النوافذ المنبثقة -->
+    <div id="toast-container"></div>
+
     <div class="modal-overlay" id="add-modal">
         <div class="modal-content">
             <div class="modal-title" id="subj-modal-title">إضافة مادة جديدة</div>
             <input type="hidden" id="edit-subj-id">
-            <div class="form-group">
-                <label>اسم المادة</label>
-                <input type="text" id="new-subj-name" placeholder="مثال: اقتصاد كلي">
-            </div>
-            <div class="form-group">
-                <label>الساعات الكلية المجدولة</label>
-                <input type="number" id="new-subj-hours" placeholder="30" value="30">
-            </div>
-            <div class="form-group">
-                <label>الوحدات الدراسية (ECTS)</label>
-                <input type="number" id="new-subj-ects" placeholder="مثال: 5" value="4">
-            </div>
+            <div class="form-group"><label>اسم المادة</label><input type="text" id="new-subj-name" placeholder="مثال: اقتصاد كلي"></div>
+            <div class="form-group"><label>الساعات الكلية المجدولة</label><input type="number" id="new-subj-hours" placeholder="30" value="30"></div>
+            <div class="form-group"><label>الوحدات الدراسية (ECTS)</label><input type="number" id="new-subj-ects" placeholder="مثال: 5" value="4"></div>
             <div class="modal-actions">
                 <button class="modal-btn btn-cancel" onclick="closeModal('add-modal')">إلغاء</button>
                 <button class="modal-btn btn-primary" onclick="saveSubject()">حفظ المادة</button>
@@ -313,30 +297,12 @@
             <div class="modal-title">إضافة محاضرة للجدول</div>
             <div class="form-group">
                 <label>اليوم</label>
-                <select id="lec-day">
-                    <option value="0">الأحد</option>
-                    <option value="1">الإثنين</option>
-                    <option value="2">الثلاثاء</option>
-                    <option value="3">الأربعاء</option>
-                    <option value="4">الخميس</option>
-                </select>
+                <select id="lec-day"><option value="0">الأحد</option><option value="1">الإثنين</option><option value="2">الثلاثاء</option><option value="3">الأربعاء</option><option value="4">الخميس</option></select>
             </div>
-            <div class="form-group">
-                <label>اسم المادة</label>
-                <input type="text" id="lec-name" placeholder="مثال: اقتصاديات النقود">
-            </div>
-            <div class="form-group">
-                <label>اسم التدريسي</label>
-                <input type="text" id="lec-prof" placeholder="مثال: ا.م.د مصطفى حسين">
-            </div>
-            <div class="form-group">
-                <label>الوقت</label>
-                <input type="text" id="lec-time" placeholder="مثال: 08:30 ص - 10:30 ص">
-            </div>
-            <div class="form-group">
-                <label>القاعة / المختبر</label>
-                <input type="text" id="lec-hall" placeholder="مثال: قاعة 1">
-            </div>
+            <div class="form-group"><label>اسم المادة</label><input type="text" id="lec-name" placeholder="مثال: اقتصاديات النقود"></div>
+            <div class="form-group"><label>اسم التدريسي</label><input type="text" id="lec-prof" placeholder="مثال: ا.م.د مصطفى حسين"></div>
+            <div class="form-group"><label>الوقت</label><input type="text" id="lec-time" placeholder="مثال: 08:30 ص - 10:30 ص"></div>
+            <div class="form-group"><label>القاعة / المختبر</label><input type="text" id="lec-hall" placeholder="مثال: قاعة 1"></div>
             <div class="modal-actions">
                 <button class="modal-btn btn-cancel" onclick="closeModal('lecture-modal')">إلغاء</button>
                 <button class="modal-btn btn-primary" onclick="addLecture()">إضافة للجدول</button>
@@ -377,244 +343,166 @@
     <script>
         let subjects = [];
         let globalLimit = parseFloat(localStorage.getItem('bolognaLimitSetting')) || 10;
-        let chartInstance = null;
         let gpaSavedGrades = JSON.parse(localStorage.getItem('bolognaGpaGrades')) || {};
-        
         let examDate = localStorage.getItem('bolognaExamDate') || '2027-01-03T08:00';
         let countdownInterval;
-
         let currentSection = localStorage.getItem('bolognaSection') || 'A';
-
+        
+        let userXP = parseInt(localStorage.getItem('bolognaUserXP')) || 0;
+        const rewards = ["عفية بالسبع! +10 XP 🏆", "استمر يا بطل! +10 XP 💪", "طالب مثالي! +10 XP 🌟", "عاشت ايدك، كفو! +10 XP 🎓"];
+        const reprimands = ["دكافي غياب عاد! -5 XP 😡", "وين نايم؟ كوم داوم! -5 XP 🛌", "راح تنفصل يمعود! -5 XP 🚨", "السعي راح يصفر! -5 XP 📉", "يا اخي استحِ على وجهك! -5 XP 🤦‍♂️"];
+        const xpThreshold = 50; 
+        
         document.getElementById('limit-input').value = globalLimit;
 
         function getCurrentWeek() {
-            let d = new Date();
-            d.setHours(0, 0, 0, 0);
-            d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-            let yearStart = new Date(d.getFullYear(), 0, 1);
-            return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            let d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+            return Math.ceil((((d - new Date(d.getFullYear(), 0, 1)) / 86400000) + 1) / 7);
         }
 
-        let scheduleState = JSON.parse(localStorage.getItem('bolognaScheduleStateV2')) || { week: getCurrentWeek(), clicks: [] };
-        if (scheduleState.week !== getCurrentWeek()) {
-            scheduleState = { week: getCurrentWeek(), clicks: [] };
-            localStorage.setItem('bolognaScheduleStateV2', JSON.stringify(scheduleState));
-        }
+        let scheduleState = JSON.parse(localStorage.getItem('bolognaScheduleStateV3')) || { week: getCurrentWeek(), clicks: {} };
+        if (scheduleState.week !== getCurrentWeek()) { scheduleState = { week: getCurrentWeek(), clicks: {} }; localStorage.setItem('bolognaScheduleStateV3', JSON.stringify(scheduleState)); }
 
-        // جدول المحاضرات الجديد بالقسمين
         let weeklySchedule = JSON.parse(localStorage.getItem('bolognaDynamicScheduleV2'));
         if (!weeklySchedule) {
             weeklySchedule = {
                 'A': {
-                    0: [
-                        { name: "نظرية اقتصادية جزئية", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د مصطفى حسين عبد العالي" },
-                        { name: "تحليل الاحصاء الاقتصادي", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" },
-                        { name: "نظرية اقتصادية جزئية", time: "12:30 م - 01:30 م", hall: "القاعة الدراسية", prof: "ا.م.د مصطفى حسين عبد العالي" }
-                    ],
-                    1: [
-                        { name: "اساسيات علم الحاسوب", time: "08:30 ص - 10:30 ص", hall: "المختبر", prof: "م. احمد علاء" },
-                        { name: "تحليل الاحصاء الاقتصادي", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" },
-                        { name: "اساسيات علم الحاسوب", time: "12:30 م - 01:30 م", hall: "المختبر", prof: "م. احمد علاء" }
-                    ],
-                    2: [
-                        { name: "اللغة العربية", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "م. م رحاب هاتف طعمة" },
-                        { name: "اقتصاديات النقود والمصارف", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" },
-                        { name: "اللغة الإنكليزية", time: "12:30 م - 02:30 م", hall: "القاعة الدراسية", prof: "م. علاء کاظم کمر" }
-                    ],
-                    3: [
-                        { name: "نظرية اقتصادية جزئية", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د مصطفى حسين عبد العالي" },
-                        { name: "اقتصاديات النقود والمصارف", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" },
-                        { name: "اقتصاديات النقود والمصارف", time: "12:30 م - 01:30 م", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" }
-                    ],
+                    0: [ { name: "نظرية اقتصادية جزئية", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د مصطفى حسين عبد العالي" }, { name: "تحليل الاحصاء الاقتصادي", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" }, { name: "نظرية اقتصادية جزئية", time: "12:30 م - 01:30 م", hall: "القاعة الدراسية", prof: "ا.م.د مصطفى حسين عبد العالي" } ],
+                    1: [ { name: "اساسيات علم الحاسوب", time: "08:30 ص - 10:30 ص", hall: "المختبر", prof: "م. احمد علاء" }, { name: "تحليل الاحصاء الاقتصادي", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" }, { name: "اساسيات علم الحاسوب", time: "12:30 م - 01:30 م", hall: "المختبر", prof: "م. احمد علاء" } ],
+                    2: [ { name: "اللغة العربية", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "م. م رحاب هاتف طعمة" }, { name: "اقتصاديات النقود والمصارف", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" }, { name: "اللغة الإنكليزية", time: "12:30 م - 02:30 م", hall: "القاعة الدراسية", prof: "م. علاء کاظم کمر" } ],
+                    3: [ { name: "نظرية اقتصادية جزئية", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د مصطفى حسين عبد العالي" }, { name: "اقتصاديات النقود والمصارف", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" }, { name: "اقتصاديات النقود والمصارف", time: "12:30 م - 01:30 م", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" } ],
                     4: []
                 },
                 'B': {
-                    0: [
-                        { name: "تحليل الاحصاء الاقتصادي", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" },
-                        { name: "نظرية اقتصادية جزئية", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د محسن خضير عباس" },
-                        { name: "نظرية اقتصادية جزئية", time: "12:30 م - 01:30 م", hall: "القاعة الدراسية", prof: "ا.م.د محسن خضير عباس" }
-                    ],
-                    1: [
-                        { name: "تحليل الاحصاء الاقتصادي", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" },
-                        { name: "اساسيات علم الحاسوب", time: "10:30 ص - 12:30 م", hall: "المختبر", prof: "م. احمد علاء" },
-                        { name: "اساسيات علم الحاسوب", time: "12:30 م - 01:30 م", hall: "المختبر", prof: "م. احمد علاء" }
-                    ],
-                    2: [
-                        { name: "اقتصاديات النقود والمصارف", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" },
-                        { name: "اللغة الإنكليزية", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "م. علاء کاظم کمر" },
-                        { name: "اقتصاديات النقود والمصارف", time: "12:30 م - 01:30 م", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" }
-                    ],
-                    3: [
-                        { name: "اقتصاديات النقود والمصارف", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" },
-                        { name: "نظرية اقتصادية جزئية", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د محسن خضير عباس" },
-                        { name: "اللغة العربية", time: "12:30 م - 02:30 م", hall: "القاعة الدراسية", prof: "م. م رحاب هاتف طعمة" }
-                    ],
+                    0: [ { name: "تحليل الاحصاء الاقتصادي", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" }, { name: "نظرية اقتصادية جزئية", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د محسن خضير عباس" }, { name: "نظرية اقتصادية جزئية", time: "12:30 م - 01:30 م", hall: "القاعة الدراسية", prof: "ا.م.د محسن خضير عباس" } ],
+                    1: [ { name: "تحليل الاحصاء الاقتصادي", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" }, { name: "اساسيات علم الحاسوب", time: "10:30 ص - 12:30 م", hall: "المختبر", prof: "م. احمد علاء" }, { name: "اساسيات علم الحاسوب", time: "12:30 م - 01:30 م", hall: "المختبر", prof: "م. احمد علاء" } ],
+                    2: [ { name: "اقتصاديات النقود والمصارف", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" }, { name: "اللغة الإنكليزية", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "م. علاء کاظم کمر" }, { name: "اقتصاديات النقود والمصارف", time: "12:30 م - 01:30 م", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" } ],
+                    3: [ { name: "اقتصاديات النقود والمصارف", time: "08:30 ص - 10:30 ص", hall: "القاعة الدراسية", prof: "ا.م.د سعد حسين + م. زينة خضير" }, { name: "نظرية اقتصادية جزئية", time: "10:30 ص - 12:30 م", hall: "القاعة الدراسية", prof: "ا.م.د محسن خضير عباس" }, { name: "اللغة العربية", time: "12:30 م - 02:30 م", hall: "القاعة الدراسية", prof: "م. م رحاب هاتف طعمة" } ],
                     4: []
                 }
             };
             localStorage.setItem('bolognaDynamicScheduleV2', JSON.stringify(weeklySchedule));
         }
 
-        let currentActiveDay = new Date().getDay(); 
-        if(currentActiveDay > 4) currentActiveDay = 0;
-
+        let currentActiveDay = new Date().getDay(); if(currentActiveDay > 4) currentActiveDay = 0;
         const isDarkModeEnabled = localStorage.getItem('bolognaDarkMode') === 'true';
-        if (isDarkModeEnabled) {
-            document.body.classList.add('dark-mode');
-            document.getElementById('theme-icon').innerText = '☀️';
-            document.getElementById('meta-theme-color').setAttribute('content', '#0f172a');
-        }
+        if (isDarkModeEnabled) { document.body.classList.add('dark-mode'); document.getElementById('theme-icon').innerText = '☀️'; document.getElementById('meta-theme-color').setAttribute('content', '#0f172a'); }
 
         function toggleDarkMode() {
-            const isDark = document.body.classList.toggle('dark-mode');
-            localStorage.setItem('bolognaDarkMode', isDark);
-            document.getElementById('theme-icon').innerText = isDark ? '☀️' : '🌙';
-            document.getElementById('meta-theme-color').setAttribute('content', isDark ? '#0f172a' : '#4318FF');
-            renderChart();
+            const isDark = document.body.classList.toggle('dark-mode'); localStorage.setItem('bolognaDarkMode', isDark);
+            document.getElementById('theme-icon').innerText = isDark ? '☀️' : '🌙'; document.getElementById('meta-theme-color').setAttribute('content', isDark ? '#0f172a' : '#4318FF');
         }
 
         function initData() {
-            const v11Data = localStorage.getItem('bolognaAcademicV11');
-            if (v11Data) {
-                subjects = JSON.parse(v11Data);
+            const v13Data = localStorage.getItem('bolognaAcademicV13');
+            if (v13Data) {
+                subjects = JSON.parse(v13Data);
             } else {
-                const oldData = localStorage.getItem('bolognaAcademicV10');
+                const oldData = localStorage.getItem('bolognaAcademicV12') || localStorage.getItem('bolognaAcademicV11');
                 if(oldData) {
                     subjects = JSON.parse(oldData);
-                    // إضافة اللغة العربية للمواد إذا لم تكن موجودة عند المستخدم
-                    if(!subjects.find(s => s.name === "اللغة العربية")) {
-                        subjects.push({ id: Date.now(), name: "اللغة العربية", totalHours: 30, absenceDates: [], ects: 2, formativeTotal: 50, formativeScore: 0 });
-                    }
+                    subjects.forEach(s => { 
+                        if(!s.attendanceDates) {
+                            s.attendanceDates = [];
+                            let prevCount = s.attendedCount || 0;
+                            for(let i=0; i<prevCount; i++) s.attendanceDates.push("حضور مسجل مسبقاً");
+                        }
+                    });
                 } else {
                     subjects = [
-                        { id: 1, name: "نظرية اقتصادية جزئية", totalHours: 30, absenceDates: [], ects: 5, formativeTotal: 50, formativeScore: 0 },
-                        { id: 2, name: "تحليل الاحصاء الاقتصادي", totalHours: 30, absenceDates: [], ects: 5, formativeTotal: 50, formativeScore: 0 },
-                        { id: 3, name: "اساسيات علم الحاسوب", totalHours: 30, absenceDates: [], ects: 4, formativeTotal: 50, formativeScore: 0 },
-                        { id: 4, name: "اللغة الإنكليزية", totalHours: 30, absenceDates: [], ects: 3, formativeTotal: 50, formativeScore: 0 },
-                        { id: 5, name: "اقتصاديات النقود والمصارف", totalHours: 30, absenceDates: [], ects: 5, formativeTotal: 50, formativeScore: 0 },
-                        { id: 6, name: "الأساليب الكمية والتطبيقات", totalHours: 30, absenceDates: [], ects: 6, formativeTotal: 50, formativeScore: 0 },
-                        { id: 7, name: "اللغة العربية", totalHours: 30, absenceDates: [], ects: 2, formativeTotal: 50, formativeScore: 0 }
+                        { id: 1, name: "نظرية اقتصادية جزئية", totalHours: 30, absenceDates: [], attendanceDates: [], ects: 5, formativeTotal: 50, formativeScore: 0 },
+                        { id: 2, name: "تحليل الاحصاء الاقتصادي", totalHours: 30, absenceDates: [], attendanceDates: [], ects: 5, formativeTotal: 50, formativeScore: 0 },
+                        { id: 3, name: "اساسيات علم الحاسوب", totalHours: 30, absenceDates: [], attendanceDates: [], ects: 4, formativeTotal: 50, formativeScore: 0 },
+                        { id: 4, name: "اللغة الإنكليزية", totalHours: 30, absenceDates: [], attendanceDates: [], ects: 3, formativeTotal: 50, formativeScore: 0 },
+                        { id: 5, name: "اقتصاديات النقود والمصارف", totalHours: 30, absenceDates: [], attendanceDates: [], ects: 5, formativeTotal: 50, formativeScore: 0 },
+                        { id: 6, name: "الأساليب الكمية والتطبيقات", totalHours: 30, absenceDates: [], attendanceDates: [], ects: 6, formativeTotal: 50, formativeScore: 0 },
+                        { id: 7, name: "اللغة العربية", totalHours: 30, absenceDates: [], attendanceDates: [], ects: 2, formativeTotal: 50, formativeScore: 0 }
                     ];
                 }
                 saveData();
             }
-            
-            // تهيئة واجهة الشعبة
+            updateLevelUI();
             setSection(currentSection);
             startCountdown();
             renderUI();
         }
 
         function saveData() {
-            localStorage.setItem('bolognaAcademicV11', JSON.stringify(subjects));
+            localStorage.setItem('bolognaAcademicV13', JSON.stringify(subjects));
             localStorage.setItem('bolognaLimitSetting', globalLimit);
-            localStorage.setItem('bolognaDynamicScheduleV2', JSON.stringify(weeklySchedule));
         }
 
-        // --- العداد ---
-        function openDateModal() {
-            if(examDate) document.getElementById('exam-date-input').value = examDate;
-            document.getElementById('date-modal').classList.add('active');
+        function updateLevelUI() {
+            if (userXP < 0) userXP = 0;
+            localStorage.setItem('bolognaUserXP', userXP);
+            let titles = ["طالب مستجد 🥚", "طالب مواظب 🎒", "مشروع متفوق 📖", "ذيب الاقتصاد 🐺", "أسطورة القسم 👑", "وزير المالية 💼"];
+            let userLevel = Math.floor(userXP / xpThreshold) + 1;
+            let titleIndex = Math.min(userLevel - 1, titles.length - 1);
+            let currentLevelXP = userXP % xpThreshold;
+            let percent = (currentLevelXP / xpThreshold) * 100;
+
+            document.getElementById('ui-level-title').innerText = `المستوى: ${userLevel} (${titles[titleIndex]})`;
+            document.getElementById('ui-level-xp').innerText = `${userXP} XP`;
+            document.getElementById('ui-xp-bar').style.width = `${percent}%`;
         }
 
+        function showToast(msg, type) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`; toast.innerText = msg;
+            container.appendChild(toast); setTimeout(() => toast.remove(), 3000);
+        }
+
+        function openDateModal() { if(examDate) document.getElementById('exam-date-input').value = examDate; document.getElementById('date-modal').classList.add('active'); }
         function saveExamDate() {
             const inputVal = document.getElementById('exam-date-input').value;
-            if(inputVal) {
-                examDate = inputVal;
-                localStorage.setItem('bolognaExamDate', examDate);
-                closeModal('date-modal');
-                startCountdown();
-            }
+            if(inputVal) { examDate = inputVal; localStorage.setItem('bolognaExamDate', examDate); closeModal('date-modal'); startCountdown(); }
         }
-
         function startCountdown() {
-            if(countdownInterval) clearInterval(countdownInterval);
-            if(!examDate) return;
-
+            if(countdownInterval) clearInterval(countdownInterval); if(!examDate) return;
             const updateTimer = () => {
-                const target = new Date(examDate).getTime();
-                const now = new Date().getTime();
-                const diff = target - now;
-
-                if(diff <= 0) {
-                    clearInterval(countdownInterval);
-                    document.getElementById('countdown-timer').style.display = 'none';
-                    document.getElementById('countdown-message').style.display = 'block';
-                    return;
-                } else {
-                    document.getElementById('countdown-timer').style.display = 'flex';
-                    document.getElementById('countdown-message').style.display = 'none';
-                }
-
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-                document.getElementById('cd-days').innerText = d < 10 ? '0'+d : d;
-                document.getElementById('cd-hours').innerText = h < 10 ? '0'+h : h;
-                document.getElementById('cd-mins').innerText = m < 10 ? '0'+m : m;
-                document.getElementById('cd-secs').innerText = s < 10 ? '0'+s : s;
+                const diff = new Date(examDate).getTime() - new Date().getTime();
+                if(diff <= 0) { clearInterval(countdownInterval); document.getElementById('countdown-timer').style.display = 'none'; document.getElementById('countdown-message').style.display = 'block'; return; }
+                else { document.getElementById('countdown-timer').style.display = 'flex'; document.getElementById('countdown-message').style.display = 'none'; }
+                document.getElementById('cd-days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                document.getElementById('cd-hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                document.getElementById('cd-mins').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                document.getElementById('cd-secs').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
             };
-
-            updateTimer();
-            countdownInterval = setInterval(updateTimer, 1000);
+            updateTimer(); countdownInterval = setInterval(updateTimer, 1000);
         }
 
         function resetAllData() {
-            if(confirm('⚠️ تحذير هام!\n\nهل أنت متأكد من تصفير جميع الغيابات ودرجات السعي؟\nهذا الإجراء لا يمكن التراجع عنه.')) {
-                subjects.forEach(sub => {
-                    sub.absenceDates = [];
-                    sub.formativeScore = 0;
-                });
-                scheduleState.clicks = [];
-                localStorage.setItem('bolognaScheduleStateV2', JSON.stringify(scheduleState));
-                saveData(); renderUI();
-                renderSchedule(currentActiveDay);
-                alert('تم تصفير البوابة بنجاح.');
+            if(confirm('⚠️ تحذير هام!\n\nهل أنت متأكد من تصفير جميع السجلات؟')) {
+                subjects.forEach(sub => { sub.absenceDates = []; sub.attendanceDates = []; sub.formativeScore = 0; });
+                scheduleState.clicks = {}; localStorage.setItem('bolognaScheduleStateV3', JSON.stringify(scheduleState));
+                userXP = 0; updateLevelUI(); saveData(); renderUI(); renderSchedule(currentActiveDay); alert('تم تصفير البوابة بنجاح.');
             }
         }
 
-        // --- الجدول الديناميكي ---
         function setSection(sec) {
-            currentSection = sec;
-            localStorage.setItem('bolognaSection', sec);
-            
-            document.querySelectorAll('.section-btn').forEach((btn, index) => {
-                if((sec === 'A' && index === 0) || (sec === 'B' && index === 1)) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
+            currentSection = sec; localStorage.setItem('bolognaSection', sec);
+            document.querySelectorAll('.section-btn').forEach((btn, index) => { btn.classList.toggle('active', (sec === 'A' && index === 0) || (sec === 'B' && index === 1)); });
             renderSchedule(currentActiveDay);
         }
 
         function renderSchedule(dayIndex) {
             currentActiveDay = dayIndex;
-            const tabs = document.querySelectorAll('.day-btn');
-            tabs.forEach((btn, i) => {
-                if (i === dayIndex) btn.classList.add('active');
-                else btn.classList.remove('active');
-            });
-
-            const list = document.getElementById('schedule-list');
-            list.innerHTML = '';
-            
+            document.querySelectorAll('.day-btn').forEach((btn, i) => btn.classList.toggle('active', i === dayIndex));
+            const list = document.getElementById('schedule-list'); list.innerHTML = '';
             const lectures = weeklySchedule[currentSection][dayIndex] || [];
-            if(lectures.length === 0) {
-                list.innerHTML = '<div style="text-align:center; padding: 20px; color:var(--text-muted); font-weight:bold;">لا توجد محاضرات مجدولة لهذا اليوم 🎉</div>';
-                return;
-            }
+            if(lectures.length === 0) { list.innerHTML = '<div style="text-align:center; padding: 20px; color:var(--text-muted); font-weight:bold;">لا توجد محاضرات مجدولة لهذا اليوم 🎉</div>'; return; }
 
             lectures.forEach((lec, index) => {
-                let btnId = currentSection + "-" + dayIndex + "-" + lec.name + "-" + index;
-                let isClicked = scheduleState.clicks.includes(btnId);
-                
-                let btnHtml = isClicked 
-                    ? `<button class="btn-quick-abs" disabled>✔️ تم تسجيل الغياب</button>` 
-                    : `<button class="btn-quick-abs" onclick="quickAbsence('${lec.name}', this, '${currentSection}', ${dayIndex}, ${index})">➕ تسجيل غياب</button>`;
-
+                let btnId = `${currentSection}-${dayIndex}-${lec.name}-${index}`;
+                let action = scheduleState.clicks[btnId];
+                let btnHtml = '';
+                if(action === 'present') btnHtml = `<button class="btn-quick-act btn-present" disabled>✔️ مسجل حضور</button>`;
+                else if(action === 'absent') btnHtml = `<button class="btn-quick-act btn-absent" disabled>❌ مسجل غياب</button>`;
+                else {
+                    btnHtml = `<button class="btn-quick-act btn-present" onclick="markScheduleAction('${lec.name}', '${btnId}', 'present')">✅ حضور</button>
+                               <button class="btn-quick-act btn-absent" onclick="markScheduleAction('${lec.name}', '${btnId}', 'absent')">❌ غياب</button>`;
+                }
                 list.innerHTML += `
                     <div class="lecture-card">
                         <button class="btn-delete-lec" onclick="deleteLecture(${dayIndex}, ${index})" title="حذف المحاضرة">✖</button>
@@ -624,139 +512,62 @@
                             <div class="lec-prof">👨‍🏫 ${lec.prof || 'غير محدد'}</div>
                             <div class="lec-hall">📍 ${lec.hall}</div>
                         </div>
-                        ${btnHtml}
-                    </div>
-                `;
+                        <div class="lec-actions-group">${btnHtml}</div>
+                    </div>`;
             });
         }
 
+        function markScheduleAction(subjName, btnId, type) {
+            const sub = subjects.find(s => s.name === subjName);
+            if(!sub) { alert('عذراً، المادة غير موجودة في الموقف الفصلي! يرجى إضافتها أولاً.'); return; }
+            if(type === 'present') {
+                changeAttendance(sub.id, 1); userXP += 10;
+                showToast(rewards[Math.floor(Math.random() * rewards.length)], 'success');
+            } else {
+                changeAbsence(sub.id, 1); userXP -= 5;
+                showToast(reprimands[Math.floor(Math.random() * reprimands.length)], 'danger');
+            }
+            updateLevelUI(); scheduleState.clicks[btnId] = type;
+            localStorage.setItem('bolognaScheduleStateV3', JSON.stringify(scheduleState)); renderSchedule(currentActiveDay);
+        }
+
         function openLectureModal() {
-            document.getElementById('lec-day').value = currentActiveDay;
-            document.getElementById('lec-name').value = '';
-            document.getElementById('lec-prof').value = '';
-            document.getElementById('lec-time').value = '';
-            document.getElementById('lec-hall').value = '';
+            document.getElementById('lec-day').value = currentActiveDay; document.getElementById('lec-name').value = '';
+            document.getElementById('lec-prof').value = ''; document.getElementById('lec-time').value = ''; document.getElementById('lec-hall').value = '';
             document.getElementById('lecture-modal').classList.add('active');
         }
 
         function addLecture() {
-            let day = parseInt(document.getElementById('lec-day').value);
-            let name = document.getElementById('lec-name').value.trim();
-            let prof = document.getElementById('lec-prof').value.trim();
-            let time = document.getElementById('lec-time').value.trim();
-            let hall = document.getElementById('lec-hall').value.trim();
-
+            let day = parseInt(document.getElementById('lec-day').value); let name = document.getElementById('lec-name').value.trim();
+            let prof = document.getElementById('lec-prof').value.trim(); let time = document.getElementById('lec-time').value.trim(); let hall = document.getElementById('lec-hall').value.trim();
             if (name && time && hall) {
                 if(!weeklySchedule[currentSection][day]) weeklySchedule[currentSection][day] = [];
                 weeklySchedule[currentSection][day].push({ name, time, hall, prof });
-                saveData();
-                closeModal('lecture-modal');
-                renderSchedule(currentActiveDay);
-            } else {
-                alert("يرجى ملء جميع الحقول المطلوبة.");
-            }
+                localStorage.setItem('bolognaDynamicScheduleV2', JSON.stringify(weeklySchedule));
+                closeModal('lecture-modal'); renderSchedule(currentActiveDay);
+            } else { alert("يرجى ملء جميع الحقول المطلوبة."); }
         }
 
-        function deleteLecture(dayIndex, lecIndex) {
-            if(confirm('هل تريد حذف هذه المحاضرة من الجدول؟')) {
-                weeklySchedule[currentSection][dayIndex].splice(lecIndex, 1);
-                saveData();
-                renderSchedule(dayIndex);
-            }
-        }
-
-        function quickAbsence(subjName, btnElement, sec, dayIndex, lecIndex) {
-            const sub = subjects.find(s => s.name === subjName);
-            if(sub) {
-                changeAbsence(sub.id, 1);
-                let btnId = sec + "-" + dayIndex + "-" + subjName + "-" + lecIndex;
-                if(!scheduleState.clicks.includes(btnId)) {
-                    scheduleState.clicks.push(btnId);
-                    localStorage.setItem('bolognaScheduleStateV2', JSON.stringify(scheduleState));
-                }
-                btnElement.innerHTML = '✔️ تم تسجيل الغياب';
-                btnElement.disabled = true;
-            } else {
-                alert('عذراً، هذه المادة غير موجودة في الموقف الفصلي! يرجى إضافتها أولاً بنفس الاسم عبر زر (إضافة مادة).');
-            }
-        }
-
-        // --- إدارة المواد (إضافة/تعديل/حذف) ---
-        function openAddModal() {
-            document.getElementById('subj-modal-title').innerText = 'إضافة مادة جديدة';
-            document.getElementById('edit-subj-id').value = '';
-            document.getElementById('new-subj-name').value = '';
-            document.getElementById('new-subj-hours').value = '30';
-            document.getElementById('new-subj-ects').value = '4';
-            document.getElementById('add-modal').classList.add('active');
-        }
-
-        function openEditModal(id) {
-            const sub = subjects.find(s => s.id === id);
-            if(!sub) return;
-            document.getElementById('subj-modal-title').innerText = 'تعديل بيانات المادة';
-            document.getElementById('edit-subj-id').value = sub.id;
-            document.getElementById('new-subj-name').value = sub.name;
-            document.getElementById('new-subj-hours').value = sub.totalHours;
-            document.getElementById('new-subj-ects').value = sub.ects;
-            document.getElementById('add-modal').classList.add('active');
-        }
-
+        function deleteLecture(dayIndex, lecIndex) { if(confirm('هل تريد حذف هذه المحاضرة؟')) { weeklySchedule[currentSection][dayIndex].splice(lecIndex, 1); localStorage.setItem('bolognaDynamicScheduleV2', JSON.stringify(weeklySchedule)); renderSchedule(dayIndex); } }
+        function openAddModal() { document.getElementById('subj-modal-title').innerText = 'إضافة مادة جديدة'; document.getElementById('edit-subj-id').value = ''; document.getElementById('new-subj-name').value = ''; document.getElementById('new-subj-hours').value = '30'; document.getElementById('new-subj-ects').value = '4'; document.getElementById('add-modal').classList.add('active'); }
+        function openEditModal(id) { const sub = subjects.find(s => s.id === id); if(!sub) return; document.getElementById('subj-modal-title').innerText = 'تعديل بيانات المادة'; document.getElementById('edit-subj-id').value = sub.id; document.getElementById('new-subj-name').value = sub.name; document.getElementById('new-subj-hours').value = sub.totalHours; document.getElementById('new-subj-ects').value = sub.ects; document.getElementById('add-modal').classList.add('active'); }
         function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); }
-
         function saveSubject() {
-            const id = document.getElementById('edit-subj-id').value;
-            const name = document.getElementById('new-subj-name').value.trim();
-            const hours = parseInt(document.getElementById('new-subj-hours').value);
-            const ects = parseInt(document.getElementById('new-subj-ects').value);
-            
+            const id = document.getElementById('edit-subj-id').value; const name = document.getElementById('new-subj-name').value.trim();
+            const hours = parseInt(document.getElementById('new-subj-hours').value); const ects = parseInt(document.getElementById('new-subj-ects').value);
             if(name && hours > 0 && ects > 0) {
-                const exists = subjects.find(s => s.name === name && s.id.toString() !== id);
-                if(exists) {
-                    alert('هذه المادة موجودة مسبقاً في القائمة!');
-                    return;
-                }
-
-                if(id) {
-                    let sub = subjects.find(s => s.id.toString() === id);
-                    if(sub) {
-                        sub.name = name;
-                        sub.totalHours = hours;
-                        sub.ects = ects;
-                    }
-                } else {
-                    subjects.push({ id: Date.now(), name: name, totalHours: hours, absenceDates: [], ects: ects, formativeTotal: 50, formativeScore: 0 });
-                }
+                const exists = subjects.find(s => s.name === name && s.id.toString() !== id); if(exists) { alert('المادة موجودة مسبقاً!'); return; }
+                if(id) { let sub = subjects.find(s => s.id.toString() === id); if(sub) { sub.name = name; sub.totalHours = hours; sub.ects = ects; } } 
+                else { subjects.push({ id: Date.now(), name: name, totalHours: hours, absenceDates: [], attendanceDates: [], ects: ects, formativeTotal: 50, formativeScore: 0 }); }
                 saveData(); renderUI(); closeModal('add-modal');
-            } else {
-                alert('يرجى ملء جميع الحقول بشكل صحيح.');
-            }
+            } else { alert('يرجى ملء جميع الحقول بشكل صحيح.'); }
         }
-
-        function deleteSubject(id) {
-            if(confirm('هل أنت متأكد من حذف هذه المادة؟ سيتم مسح جميع غياباتها وسعيها.')) {
-                subjects = subjects.filter(s => s.id !== id);
-                saveData(); renderUI();
-            }
-        }
-
-        // --- حاسبة المعدل ---
+        function deleteSubject(id) { if(confirm('هل أنت متأكد من حذف هذه المادة؟')) { subjects = subjects.filter(s => s.id !== id); saveData(); renderUI(); } }
+        
         function openGpaModal() {
-            const listDiv = document.getElementById('gpa-subjects-list');
-            listDiv.innerHTML = '';
-            document.getElementById('gpa-result-box').style.display = 'none';
-            if(subjects.length === 0) {
-                listDiv.innerHTML = '<p style="text-align:center; color:var(--text-muted)">لا توجد مواد.</p>';
-            } else {
-                subjects.forEach(sub => {
-                    let savedGrade = gpaSavedGrades[sub.id] || '';
-                    listDiv.innerHTML += `
-                        <div class="gpa-subject-row">
-                            <div class="gpa-subj-name">${sub.name} <span class="subj-ects" style="margin-right:5px">${sub.ects} ECTS</span></div>
-                            <input type="number" class="gpa-subj-input" id="gpa-grade-${sub.id}" placeholder="0" min="0" max="100" value="${savedGrade}">
-                        </div>`;
-                });
-            }
+            const listDiv = document.getElementById('gpa-subjects-list'); listDiv.innerHTML = ''; document.getElementById('gpa-result-box').style.display = 'none';
+            if(subjects.length === 0) listDiv.innerHTML = '<p style="text-align:center; color:var(--text-muted)">لا توجد مواد.</p>';
+            else subjects.forEach(sub => { listDiv.innerHTML += `<div class="gpa-subject-row"><div class="gpa-subj-name">${sub.name} <span class="subj-ects" style="margin-right:5px">${sub.ects} ECTS</span></div><input type="number" class="gpa-subj-input" id="gpa-grade-${sub.id}" placeholder="0" min="0" max="100" value="${gpaSavedGrades[sub.id] || ''}"></div>`; });
             document.getElementById('gpa-modal').classList.add('active');
         }
 
@@ -766,244 +577,164 @@
                 const gradeInput = document.getElementById(`gpa-grade-${sub.id}`);
                 if(gradeInput) {
                     const grade = parseFloat(gradeInput.value) || 0;
-                    if(grade > 0) gpaSavedGrades[sub.id] = grade;
-                    else delete gpaSavedGrades[sub.id];
-
+                    if(grade > 0) gpaSavedGrades[sub.id] = grade; else delete gpaSavedGrades[sub.id];
                     totalPoints += (grade * sub.ects); totalECTS += sub.ects;
                 }
             });
             localStorage.setItem('bolognaGpaGrades', JSON.stringify(gpaSavedGrades));
-
-            if(totalECTS > 0) {
-                document.getElementById('gpa-final-score').innerText = (totalPoints / totalECTS).toFixed(2) + " %";
-                document.getElementById('gpa-result-box').style.display = 'block';
-            }
+            if(totalECTS > 0) { document.getElementById('gpa-final-score').innerText = (totalPoints / totalECTS).toFixed(2) + " %"; document.getElementById('gpa-result-box').style.display = 'block'; }
         }
 
         function exportData() {
-            const dataToExport = { version: "11", limit: globalLimit, data: subjects, schedule: weeklySchedule, gpa: gpaSavedGrades };
+            const dataToExport = { version: "13", limit: globalLimit, xp: userXP, data: subjects, schedule: weeklySchedule, gpa: gpaSavedGrades };
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToExport));
-            const a = document.createElement('a'); a.href = dataStr; a.download = "Bologna_Backup.json";
-            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            const a = document.createElement('a'); a.href = dataStr; a.download = "Bologna_Backup.json"; document.body.appendChild(a); a.click(); document.body.removeChild(a);
         }
 
         function importData(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
+            const file = event.target.files[0]; if (!file) return; const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const imported = JSON.parse(e.target.result);
                     if(imported.data) {
-                        subjects = imported.data;
-                        if(imported.limit) globalLimit = imported.limit;
-                        if(imported.schedule) weeklySchedule = imported.schedule;
-                        if(imported.gpa) gpaSavedGrades = imported.gpa;
-                        document.getElementById('limit-input').value = globalLimit;
-                        saveData(); renderUI(); renderSchedule(currentActiveDay); alert('تم الاسترجاع بنجاح!');
+                        subjects = imported.data; if(imported.limit) globalLimit = imported.limit; if(imported.schedule) weeklySchedule = imported.schedule;
+                        if(imported.gpa) gpaSavedGrades = imported.gpa; if(imported.xp) userXP = imported.xp;
+                        document.getElementById('limit-input').value = globalLimit; updateLevelUI(); saveData(); renderUI(); renderSchedule(currentActiveDay); alert('تم الاسترجاع بنجاح!');
                     }
                 } catch (err) { alert("ملف غير صالح."); }
             };
             reader.readAsText(file); event.target.value = '';
         }
 
-        function updateGlobalLimit() {
-            let val = parseFloat(document.getElementById('limit-input').value);
-            if (val >= 5 && val <= 100) { globalLimit = val; saveData(); renderUI(); }
-        }
-
-        function updateHours(id, newTotal) {
-            const val = parseInt(newTotal);
-            if(val > 0) {
-                const sub = subjects.find(s => s.id === id);
-                if(sub) { 
-                    sub.totalHours = val; 
-                    if(sub.absenceDates.length > sub.totalHours) sub.absenceDates = sub.absenceDates.slice(0, sub.totalHours);
-                    saveData(); renderUI(); 
-                }
-            }
-        }
-
-        function toggleFormativeLog(id, btnElement) {
-            const div = document.getElementById(`formative-${id}`);
-            const logDiv = document.getElementById(`log-${id}`);
-            if(logDiv.classList.contains('active')) { logDiv.classList.remove('active'); }
-            div.classList.toggle('active');
-        }
-
-        function updateFormative(id, field, value) {
-            const sub = subjects.find(s => s.id === id);
-            if(sub) {
-                sub[field] = parseFloat(value) || 0;
-                saveData();
-                updateFormativeTargetUI(sub);
-            }
-        }
-
-        function updateFormativeTargetUI(sub) {
-            const targetDiv = document.getElementById(`final-target-${sub.id}`);
-            if(!targetDiv) return;
-            
-            const passingGrade = 50;
-            const requiredFinal = passingGrade - sub.formativeScore;
-            const finalWeight = 100 - sub.formativeTotal; 
-            
-            targetDiv.classList.remove('safe', 'danger');
-            
-            if (requiredFinal <= 0) {
-                targetDiv.innerHTML = `🎉 ناجح في السعي! لا تحتاج لدرجات بالفاينل للنجاح.`;
-                targetDiv.classList.add('safe');
-            } else if (requiredFinal > finalWeight) {
-                targetDiv.innerHTML = `⚠️ درجتك الحالية لا تكفي للنجاح حتى لو حصلت على درجة كاملة بالفاينل.`;
-                targetDiv.classList.add('danger');
-            } else {
-                targetDiv.innerHTML = `تحتاج <b>${requiredFinal}</b> درجة في الفاينل (من ${finalWeight}) للنجاح.`;
-            }
-        }
+        function updateGlobalLimit() { let val = parseFloat(document.getElementById('limit-input').value); if (val >= 5 && val <= 100) { globalLimit = val; saveData(); renderUI(); } }
 
         function changeAbsence(id, amount) {
             const sub = subjects.find(s => s.id === id);
             if(sub) {
                 if(!sub.absenceDates) sub.absenceDates = [];
-                if (amount > 0 && sub.absenceDates.length < sub.totalHours) {
-                    const today = new Date().toLocaleDateString('ar-IQ', { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' });
-                    sub.absenceDates.push(today);
-                } else if (amount < 0 && sub.absenceDates.length > 0) {
-                    sub.absenceDates.pop();
-                }
+                if (amount > 0 && sub.absenceDates.length < sub.totalHours) { sub.absenceDates.push(new Date().toLocaleDateString('ar-IQ', { month: 'short', day: 'numeric', weekday: 'short' })); } 
+                else if (amount < 0 && sub.absenceDates.length > 0) { sub.absenceDates.pop(); }
                 saveData(); renderUI();
             }
         }
 
-        function toggleDatesLog(id, btnElement) {
-            const logDiv = document.getElementById(`log-${id}`);
-            const formativeDiv = document.getElementById(`formative-${id}`);
-            if(formativeDiv.classList.contains('active')) { formativeDiv.classList.remove('active'); }
-            logDiv.classList.toggle('active');
-        }
-
-        function renderChart() {
-            const ctx = document.getElementById('absencesChart').getContext('2d');
-            const isDark = document.body.classList.contains('dark-mode');
-            const displaySubjects = getSortedSubjects();
-            const labels = displaySubjects.map(s => s.name.length > 15 ? s.name.substring(0, 15) + '...' : s.name);
-            const dataPct = displaySubjects.map(s => (s.absenceDates ? (s.absenceDates.length / s.totalHours) * 100 : 0).toFixed(1));
-            const bgColors = dataPct.map(val => val >= globalLimit ? '#EE5D50' : (val >= globalLimit/2 ? '#FFCE20' : '#01B574'));
-
-            if (chartInstance) chartInstance.destroy();
-            chartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: { labels: labels, datasets: [{ label: 'نسبة الغياب %', data: dataPct, backgroundColor: bgColors, borderRadius: 6, maxBarThickness: 40 }] },
-                options: {
-                    responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, max: globalLimit + 5, grid: { color: isDark ? '#334155' : '#E0E5F2' }, ticks: { color: isDark ? '#94a3b8' : '#A3AED0', font: {family: 'Tajawal'} } },
-                        x: { grid: { display: false }, ticks: { color: isDark ? '#94a3b8' : '#A3AED0', font: {family: 'Tajawal', size: 10} } }
-                    }
-                }
-            });
-        }
-
-        function getSortedSubjects() {
-            const sortType = document.getElementById('sort-select').value;
-            let sorted = [...subjects];
-            if (sortType === 'absences') {
-                sorted.sort((a, b) => (b.absenceDates?.length || 0) - (a.absenceDates?.length || 0));
-            } else if (sortType === 'danger') {
-                sorted.sort((a, b) => {
-                    let pctA = ((a.absenceDates?.length || 0) / a.totalHours) * 100;
-                    let pctB = ((b.absenceDates?.length || 0) / b.totalHours) * 100;
-                    return pctB - pctA;
-                });
+        function changeAttendance(id, amount) {
+            const sub = subjects.find(s => s.id === id);
+            if(sub) {
+                if(!sub.attendanceDates) sub.attendanceDates = [];
+                if (amount > 0) { sub.attendanceDates.push(new Date().toLocaleDateString('ar-IQ', { month: 'short', day: 'numeric', weekday: 'short' })); } 
+                else if (amount < 0 && sub.attendanceDates.length > 0) { sub.attendanceDates.pop(); }
+                saveData(); renderUI();
             }
-            return sorted;
+        }
+
+        function toggleLog(id, type) {
+            const absLog = document.getElementById(`log-abs-${id}`);
+            const attLog = document.getElementById(`log-att-${id}`);
+            const formLog = document.getElementById(`formative-${id}`);
+            
+            let isAbsActive = absLog.classList.contains('active');
+            let isAttActive = attLog.classList.contains('active');
+            let isFormActive = formLog.classList.contains('active');
+
+            absLog.classList.remove('active'); attLog.classList.remove('active'); formLog.classList.remove('active');
+
+            if(type === 'abs' && !isAbsActive) absLog.classList.add('active');
+            if(type === 'att' && !isAttActive) attLog.classList.add('active');
+            if(type === 'formative' && !isFormActive) formLog.classList.add('active');
+        }
+
+        function updateFormative(id, field, value) { const sub = subjects.find(s => s.id === id); if(sub) { sub[field] = parseFloat(value) || 0; saveData(); updateTargetUI(sub); } }
+
+        function updateTargetUI(sub) {
+            const targetDiv = document.getElementById(`final-target-${sub.id}`); if(!targetDiv) return;
+            const requiredFinal = 50 - sub.formativeScore; const finalWeight = 100 - sub.formativeTotal; targetDiv.classList.remove('safe', 'danger');
+            if (requiredFinal <= 0) { targetDiv.innerHTML = `🎉 ناجح في السعي! لا تحتاج لدرجات بالفاينل.`; targetDiv.classList.add('safe'); } 
+            else if (requiredFinal > finalWeight) { targetDiv.innerHTML = `⚠️ درجتك لا تكفي للنجاح حتى مع درجة كاملة بالفاينل.`; targetDiv.classList.add('danger'); } 
+            else { targetDiv.innerHTML = `تحتاج <b>${requiredFinal}</b> درجة في الفاينل (من ${finalWeight}).`; }
         }
 
         function renderUI() {
-            const container = document.getElementById('subjects-container');
-            container.innerHTML = '';
+            const container = document.getElementById('subjects-container'); container.innerHTML = '';
             let totalAbs = 0; let dangerCount = 0;
-            const sortedSubjects = getSortedSubjects();
-
-            sortedSubjects.forEach(sub => {
-                const absentCount = sub.absenceDates ? sub.absenceDates.length : 0;
-                totalAbs += absentCount;
-                let percentage = (absentCount / sub.totalHours) * 100;
-                
-                let warningThreshold = globalLimit / 2;
-                let badgeClass = 'badge-safe'; let badgeText = 'آمن';
-                let cardClass = ''; let progressColor = 'var(--success)';
-
-                if (percentage >= globalLimit) { badgeClass = 'badge-danger'; badgeText = 'حرمان 🚨'; cardClass = 'danger-state'; progressColor = 'var(--danger)'; dangerCount++; }
-                else if (percentage >= warningThreshold) { badgeClass = 'badge-warning'; badgeText = 'إنذار ⚠️'; cardClass = 'warning-state'; progressColor = 'var(--warning)'; }
-
-                let datesHtml = absentCount === 0 ? 
-                    `<div class="date-item" style="justify-content:center; color:var(--text-muted);">لا توجد غيابات</div>` :
-                    sub.absenceDates.map((date, i) => `<div class="date-item"><span style="color:var(--text-muted)">غياب ${i+1}</span><span>${date}</span></div>`).join('');
-
-                const card = document.createElement('div');
-                card.className = `subject-card ${cardClass}`;
-                card.innerHTML = `
-                    <div class="subj-header">
-                        <div class="header-actions">
-                            <div class="subj-title">${sub.name}</div>
-                            <div class="subj-actions">
-                                <span class="subj-ects">${sub.ects} ECTS</span>
-                                <button class="btn-icon" onclick="openEditModal(${sub.id})" title="تعديل المادة">✏️</button>
-                                <button class="btn-icon" onclick="deleteSubject(${sub.id})" title="حذف المادة">🗑️</button>
-                            </div>
-                        </div>
-                        <span class="badge ${badgeClass}">${badgeText}</span>
-                    </div>
-                    
-                    <div class="controls-wrapper">
-                        <div class="hours-box">
-                            <label>الساعات الكلية</label>
-                            <input type="number" value="${sub.totalHours}" onchange="updateHours(${sub.id}, this.value)">
-                        </div>
-                        <div class="stepper">
-                            <button class="step-btn" onclick="changeAbsence(${sub.id}, -1)">-</button>
-                            <div class="step-val">${absentCount}</div>
-                            <button class="step-btn" onclick="changeAbsence(${sub.id}, 1)" style="color:var(--brand-primary)">+</button>
-                        </div>
-                    </div>
-
-                    <div class="progress-container">
-                        <div class="progress-labels">
-                            <span style="color: var(--text-muted);">نسبة الغياب</span>
-                            <span style="color: ${progressColor}; font-weight: 900;">${percentage.toFixed(1)}%</span>
-                        </div>
-                        <div class="progress-track"><div class="progress-fill" style="width: ${Math.min(percentage, 100)}%; background: ${progressColor}"></div></div>
-                    </div>
-
-                    <div class="card-bottom-actions">
-                        <button class="dates-toggle-btn" onclick="toggleDatesLog(${sub.id}, this)">سجل الغياب 🔽</button>
-                        <button class="dates-toggle-btn" onclick="toggleFormativeLog(${sub.id}, this)" style="color: var(--brand-primary)">السعي الفصلي 📊</button>
-                    </div>
-                    
-                    <div class="dates-log" id="log-${sub.id}">${datesHtml}</div>
-
-                    <div class="formative-section" id="formative-${sub.id}">
-                        <div class="formative-grid">
-                            <div class="formative-box">
-                                <label>درجة السعي (من)</label>
-                                <input type="number" value="${sub.formativeTotal}" onchange="updateFormative(${sub.id}, 'formativeTotal', this.value)">
-                            </div>
-                            <div class="formative-box">
-                                <label>درجتك الحالية</label>
-                                <input type="number" value="${sub.formativeScore}" oninput="updateFormative(${sub.id}, 'formativeScore', this.value)">
-                            </div>
-                        </div>
-                        <div class="final-target" id="final-target-${sub.id}"></div>
-                    </div>
-                `;
-                container.appendChild(card);
-                updateFormativeTargetUI(sub); 
+            const sortType = document.getElementById('sort-select').value;
+            let sortedSubjects = [...subjects].sort((a, b) => {
+                if(sortType === 'absences') return (b.absenceDates?.length || 0) - (a.absenceDates?.length || 0);
+                if(sortType === 'danger') return (((b.absenceDates?.length || 0)/b.totalHours)*100) - (((a.absenceDates?.length || 0)/a.totalHours)*100);
+                return 0;
             });
 
-            document.getElementById('total-absences').innerText = totalAbs;
-            document.getElementById('danger-count').innerText = dangerCount;
-            renderChart();
+            sortedSubjects.forEach(sub => {
+                const absentCount = sub.absenceDates ? sub.absenceDates.length : 0; totalAbs += absentCount;
+                const attCount = sub.attendanceDates ? sub.attendanceDates.length : 0;
+                let percentage = (absentCount / sub.totalHours) * 100;
+                let badgeClass = 'badge-safe'; let badgeText = 'آمن'; let cardClass = ''; let progressColor = 'var(--success)';
+
+                if (percentage >= globalLimit) { badgeClass = 'badge-danger'; badgeText = 'حرمان 🚨'; cardClass = 'danger-state'; progressColor = 'var(--danger)'; dangerCount++; }
+                else if (percentage >= globalLimit / 2) { badgeClass = 'badge-warning'; badgeText = 'إنذار ⚠️'; progressColor = 'var(--warning)'; }
+
+                let absHtml = absentCount === 0 ? `<div class="date-item" style="justify-content:center; color:var(--text-muted);">لا توجد غيابات مسجلة</div>` : sub.absenceDates.map((date, i) => `<div class="date-item" style="border-color:rgba(238, 93, 80, 0.3)"><span style="color:var(--danger)">غياب ${i+1}</span><span>${date}</span></div>`).join('');
+                let attHtml = attCount === 0 ? `<div class="date-item" style="justify-content:center; color:var(--text-muted);">لا يوجد حضور مسجل</div>` : sub.attendanceDates.map((date, i) => `<div class="date-item" style="border-color:rgba(1, 181, 116, 0.3)"><span style="color:var(--success)">حضور ${i+1}</span><span>${date}</span></div>`).join('');
+
+                container.innerHTML += `
+                    <div class="subject-card ${cardClass}">
+                        <div class="subj-header">
+                            <div class="header-actions">
+                                <div class="subj-title">${sub.name}</div>
+                                <div class="subj-actions">
+                                    <span class="subj-ects">${sub.ects} ECTS</span>
+                                    <button class="btn-icon" onclick="openEditModal(${sub.id})" title="تعديل المادة">✏️</button>
+                                    <button class="btn-icon" onclick="deleteSubject(${sub.id})" title="حذف المادة">🗑️</button>
+                                </div>
+                            </div>
+                            <span class="badge ${badgeClass}">${badgeText}</span>
+                        </div>
+                        
+                        <div class="controls-wrapper">
+                            <div class="hours-box">
+                                <label>حضور ✅</label>
+                                <div class="stepper">
+                                    <button class="step-btn" onclick="changeAttendance(${sub.id}, -1)">-</button>
+                                    <div class="step-val" style="color: var(--success)">${attCount}</div>
+                                    <button class="step-btn" onclick="changeAttendance(${sub.id}, 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="hours-box">
+                                <label>غياب ❌</label>
+                                <div class="stepper">
+                                    <button class="step-btn" onclick="changeAbsence(${sub.id}, -1)">-</button>
+                                    <div class="step-val" style="color: var(--danger)">${absentCount}</div>
+                                    <button class="step-btn" onclick="changeAbsence(${sub.id}, 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-labels"><span style="color: var(--text-muted);">نسبة الغياب</span><span style="color: ${progressColor}; font-weight: 900;">${percentage.toFixed(1)}%</span></div>
+                            <div class="progress-track"><div class="progress-fill" style="width: ${Math.min(percentage, 100)}%; background: ${progressColor}"></div></div>
+                        </div>
+
+                        <div class="card-bottom-actions">
+                            <button class="dates-toggle-btn" onclick="toggleLog(${sub.id}, 'att')" style="color: var(--success)">سجل الحضور 🔽</button>
+                            <button class="dates-toggle-btn" onclick="toggleLog(${sub.id}, 'abs')">سجل الغياب 🔽</button>
+                            <button class="dates-toggle-btn" onclick="toggleLog(${sub.id}, 'formative')" style="color: var(--brand-primary)">السعي الفصلي 📊</button>
+                        </div>
+                        
+                        <div class="dates-log" id="log-att-${sub.id}">${attHtml}</div>
+                        <div class="dates-log" id="log-abs-${sub.id}">${absHtml}</div>
+                        
+                        <div class="formative-section" id="formative-${sub.id}">
+                            <div class="formative-grid">
+                                <div class="formative-box"><label>درجة السعي (من)</label><input type="number" value="${sub.formativeTotal}" onchange="updateFormative(${sub.id}, 'formativeTotal', this.value)"></div>
+                                <div class="formative-box"><label>درجتك الحالية</label><input type="number" value="${sub.formativeScore}" oninput="updateFormative(${sub.id}, 'formativeScore', this.value)"></div>
+                            </div>
+                            <div class="final-target" id="final-target-${sub.id}"></div>
+                        </div>
+                    </div>
+                `;
+                setTimeout(() => updateTargetUI(sub), 0);
+            });
+            document.getElementById('total-absences').innerText = totalAbs; document.getElementById('danger-count').innerText = dangerCount;
         }
 
         initData();
