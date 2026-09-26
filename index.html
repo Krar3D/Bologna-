@@ -363,7 +363,6 @@
         let scheduleState = JSON.parse(localStorage.getItem('bolognaScheduleStateV3')) || { week: getCurrentWeek(), clicks: {} };
         if (scheduleState.week !== getCurrentWeek()) { scheduleState = { week: getCurrentWeek(), clicks: {} }; localStorage.setItem('bolognaScheduleStateV3', JSON.stringify(scheduleState)); }
 
-        // قمت بتغيير اسم المتغير في LocalStorage إلى V3 لكي يفرض تحديث الجدول تلقائياً في متصفحك
         let weeklySchedule = JSON.parse(localStorage.getItem('bolognaDynamicScheduleV3'));
         if (!weeklySchedule) {
             weeklySchedule = {
@@ -383,8 +382,6 @@
                 }
             };
             localStorage.setItem('bolognaDynamicScheduleV3', JSON.stringify(weeklySchedule));
-        }
-
         }
 
         let currentActiveDay = new Date().getDay(); if(currentActiveDay > 4) currentActiveDay = 0;
@@ -546,12 +543,12 @@
             if (name && time && hall) {
                 if(!weeklySchedule[currentSection][day]) weeklySchedule[currentSection][day] = [];
                 weeklySchedule[currentSection][day].push({ name, time, hall, prof });
-                localStorage.setItem('bolognaDynamicScheduleV2', JSON.stringify(weeklySchedule));
+                localStorage.setItem('bolognaDynamicScheduleV3', JSON.stringify(weeklySchedule));
                 closeModal('lecture-modal'); renderSchedule(currentActiveDay);
             } else { alert("يرجى ملء جميع الحقول المطلوبة."); }
         }
 
-        function deleteLecture(dayIndex, lecIndex) { if(confirm('هل تريد حذف هذه المحاضرة؟')) { weeklySchedule[currentSection][dayIndex].splice(lecIndex, 1); localStorage.setItem('bolognaDynamicScheduleV2', JSON.stringify(weeklySchedule)); renderSchedule(dayIndex); } }
+        function deleteLecture(dayIndex, lecIndex) { if(confirm('هل تريد حذف هذه المحاضرة؟')) { weeklySchedule[currentSection][dayIndex].splice(lecIndex, 1); localStorage.setItem('bolognaDynamicScheduleV3', JSON.stringify(weeklySchedule)); renderSchedule(dayIndex); } }
         function openAddModal() { document.getElementById('subj-modal-title').innerText = 'إضافة مادة جديدة'; document.getElementById('edit-subj-id').value = ''; document.getElementById('new-subj-name').value = ''; document.getElementById('new-subj-hours').value = '30'; document.getElementById('new-subj-ects').value = '4'; document.getElementById('add-modal').classList.add('active'); }
         function openEditModal(id) { const sub = subjects.find(s => s.id === id); if(!sub) return; document.getElementById('subj-modal-title').innerText = 'تعديل بيانات المادة'; document.getElementById('edit-subj-id').value = sub.id; document.getElementById('new-subj-name').value = sub.name; document.getElementById('new-subj-hours').value = sub.totalHours; document.getElementById('new-subj-ects').value = sub.ects; document.getElementById('add-modal').classList.add('active'); }
         function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); }
