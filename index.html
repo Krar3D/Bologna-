@@ -363,25 +363,58 @@
         let scheduleState = JSON.parse(localStorage.getItem('bolognaScheduleStateV3')) || { week: getCurrentWeek(), clicks: {} };
         if (scheduleState.week !== getCurrentWeek()) { scheduleState = { week: getCurrentWeek(), clicks: {} }; localStorage.setItem('bolognaScheduleStateV3', JSON.stringify(scheduleState)); }
 
-        let weeklySchedule = JSON.parse(localStorage.getItem('bolognaDynamicScheduleV3'));
+        // تم التحديث إلى V4 لاعتماد الجدول الجديد تلقائياً
+        let weeklySchedule = JSON.parse(localStorage.getItem('bolognaDynamicScheduleV4'));
         if (!weeklySchedule) {
             weeklySchedule = {
                 'A': {
-                    0: [ { name: "نظرية اقتصادية جزئية", time: "08:30 ص - 10:30 ص", hall: "قاعة 11", prof: "ا.م.د مصطفى حسين عبد العالي" }, { name: "تحليل الاحصاء الاقتصادي", time: "10:30 ص - 12:30 م", hall: "قاعة 11", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" }, { name: "نظرية اقتصادية جزئية", time: "12:30 م - 01:30 م", hall: "قاعة 11", prof: "ا.م.د مصطفى حسين عبد العالي" } ],
-                    1: [ { name: "اساسيات علم الحاسوب", time: "08:30 ص - 10:30 ص", hall: "المختبر", prof: "م. احمد علاء" }, { name: "تحليل الاحصاء الاقتصادي", time: "10:30 ص - 12:30 م", hall: "قاعة 11", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" }, { name: "اساسيات علم الحاسوب", time: "12:30 م - 01:30 م", hall: "المختبر", prof: "م. احمد علاء" } ],
-                    2: [ { name: "اللغة العربية", time: "08:30 ص - 10:30 ص", hall: "قاعة 11", prof: "م. م رحاب هاتف طعمة" }, { name: "اقتصاديات النقود والمصارف", time: "10:30 ص - 12:30 م", hall: "قاعة 11", prof: "ا.م.د سعد حسين + م. زينة خضير" }, { name: "اللغة الإنكليزية", time: "12:30 م - 02:30 م", hall: "قاعة 11", prof: "م. علاء کاظم کمر" } ],
-                    3: [ { name: "نظرية اقتصادية جزئية", time: "08:30 ص - 10:30 ص", hall: "قاعة 11", prof: "ا.م.د مصطفى حسين عبد العالي" }, { name: "اقتصاديات النقود والمصارف", time: "10:30 ص - 12:30 م", hall: "قاعة 11", prof: "ا.م.د سعد حسين + م. زينة خضير" }, { name: "اقتصاديات النقود والمصارف", time: "12:30 م - 01:30 م", hall: "قاعة 11", prof: "ا.م.د سعد حسين + م. زينة خضير" } ],
+                    0: [ 
+                        { name: "اساسيات علم الحاسوب", time: "08:30 ص - 10:30 ص", hall: "المختبر", prof: "م. احمد علاء" }, 
+                        { name: "تحليل الاحصاء الاقتصادي", time: "10:30 ص - 12:30 م", hall: "قاعة 11", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" }, 
+                        { name: "اساسيات علم الحاسوب", time: "12:30 م - 01:30 م", hall: "المختبر", prof: "م. احمد علاء" } 
+                    ],
+                    1: [ 
+                        { name: "نظرية اقتصادية جزئية", time: "08:30 ص - 10:30 ص", hall: "قاعة 11", prof: "ا.م.د مصطفى حسين عبد العالي" }, 
+                        { name: "تحليل الاحصاء الاقتصادي", time: "10:30 ص - 12:30 م", hall: "قاعة 11", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" }, 
+                        { name: "نظرية اقتصادية جزئية", time: "12:30 م - 01:30 م", hall: "قاعة 11", prof: "ا.م.د مصطفى حسين عبد العالي" } 
+                    ],
+                    2: [ 
+                        { name: "اللغة العربية", time: "08:30 ص - 10:30 ص", hall: "قاعة 11", prof: "م. م رحاب هاتف طعمة" }, 
+                        { name: "اقتصاديات النقود والمصارف", time: "10:30 ص - 12:30 م", hall: "قاعة 11", prof: "ا.م.د سعد حسين + م. زينة خضير" }, 
+                        { name: "اللغة الإنكليزية", time: "12:30 م - 02:30 م", hall: "قاعة 11", prof: "م. علاء کاظم کمر" } 
+                    ],
+                    3: [ 
+                        { name: "نظرية اقتصادية جزئية", time: "08:30 ص - 10:30 ص", hall: "قاعة 11", prof: "ا.م.د مصطفى حسين عبد العالي" }, 
+                        { name: "اقتصاديات النقود والمصارف", time: "10:30 ص - 12:30 م", hall: "قاعة 11", prof: "ا.م.د سعد حسين + م. زينة خضير" }, 
+                        { name: "اقتصاديات النقود والمصارف", time: "12:30 م - 01:30 م", hall: "قاعة 11", prof: "ا.م.د سعد حسين + م. زينة خضير" } 
+                    ],
                     4: []
                 },
                 'B': {
-                    0: [ { name: "تحليل الاحصاء الاقتصادي", time: "08:30 ص - 10:30 ص", hall: "قاعة 12", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" }, { name: "نظرية اقتصادية جزئية", time: "10:30 ص - 12:30 م", hall: "قاعة 12", prof: "ا.م.د محسن خضير عباس" }, { name: "نظرية اقتصادية جزئية", time: "12:30 م - 01:30 م", hall: "قاعة 12", prof: "ا.م.د محسن خضير عباس" } ],
-                    1: [ { name: "تحليل الاحصاء الاقتصادي", time: "08:30 ص - 10:30 ص", hall: "قاعة 12", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" }, { name: "اساسيات علم الحاسوب", time: "10:30 ص - 12:30 م", hall: "المختبر", prof: "م. احمد علاء" }, { name: "اساسيات علم الحاسوب", time: "12:30 م - 01:30 م", hall: "المختبر", prof: "م. احمد علاء" } ],
-                    2: [ { name: "اقتصاديات النقود والمصارف", time: "08:30 ص - 10:30 ص", hall: "قاعة 12", prof: "ا.م.د سعد حسين + م. زينة خضير" }, { name: "اللغة الإنكليزية", time: "10:30 ص - 12:30 م", hall: "قاعة 12", prof: "م. علاء کاظم کمر" }, { name: "اقتصاديات النقود والمصارف", time: "12:30 م - 01:30 م", hall: "قاعة 12", prof: "ا.م.د سعد حسين + م. زينة خضير" } ],
-                    3: [ { name: "اقتصاديات النقود والمصارف", time: "08:30 ص - 10:30 ص", hall: "قاعة 12", prof: "ا.م.د سعد حسين + م. زينة خضير" }, { name: "نظرية اقتصادية جزئية", time: "10:30 ص - 12:30 م", hall: "قاعة 12", prof: "ا.م.د محسن خضير عباس" }, { name: "اللغة العربية", time: "12:30 م - 02:30 م", hall: "قاعة 12", prof: "م. م رحاب هاتف طعمة" } ],
+                    0: [ 
+                        { name: "تحليل الاحصاء الاقتصادي", time: "08:30 ص - 10:30 ص", hall: "قاعة 12", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" }, 
+                        { name: "اساسيات علم الحاسوب", time: "10:30 ص - 12:30 م", hall: "المختبر", prof: "م. احمد علاء" }, 
+                        { name: "اساسيات علم الحاسوب", time: "12:30 م - 01:30 م", hall: "المختبر", prof: "م. احمد علاء" } 
+                    ],
+                    1: [ 
+                        { name: "تحليل الاحصاء الاقتصادي", time: "08:30 ص - 10:30 ص", hall: "قاعة 12", prof: "ا.م.د زينب علي + ا.م.د فاطمة فرج" }, 
+                        { name: "نظرية اقتصادية جزئية", time: "10:30 ص - 12:30 م", hall: "قاعة 12", prof: "ا.م.د محسن خضير عباس" }, 
+                        { name: "نظرية اقتصادية جزئية", time: "12:30 م - 01:30 م", hall: "قاعة 12", prof: "ا.م.د محسن خضير عباس" } 
+                    ],
+                    2: [ 
+                        { name: "اقتصاديات النقود والمصارف", time: "08:30 ص - 10:30 ص", hall: "قاعة 12", prof: "ا.م.د سعد حسين + م. زينة خضير" }, 
+                        { name: "اللغة الإنكليزية", time: "10:30 ص - 12:30 م", hall: "قاعة 12", prof: "م. علاء کاظم کمر" }, 
+                        { name: "اقتصاديات النقود والمصارف", time: "12:30 م - 01:30 م", hall: "قاعة 12", prof: "ا.م.د سعد حسين + م. زينة خضير" } 
+                    ],
+                    3: [ 
+                        { name: "اقتصاديات النقود والمصارف", time: "08:30 ص - 10:30 ص", hall: "قاعة 12", prof: "ا.م.د سعد حسين + م. زينة خضير" }, 
+                        { name: "نظرية اقتصادية جزئية", time: "10:30 ص - 12:30 م", hall: "قاعة 12", prof: "ا.م.د محسن خضير عباس" }, 
+                        { name: "اللغة العربية", time: "12:30 م - 02:30 م", hall: "قاعة 12", prof: "م. م رحاب هاتف طعمة" } 
+                    ],
                     4: []
                 }
             };
-            localStorage.setItem('bolognaDynamicScheduleV3', JSON.stringify(weeklySchedule));
+            localStorage.setItem('bolognaDynamicScheduleV4', JSON.stringify(weeklySchedule));
         }
 
         let currentActiveDay = new Date().getDay(); if(currentActiveDay > 4) currentActiveDay = 0;
@@ -543,12 +576,12 @@
             if (name && time && hall) {
                 if(!weeklySchedule[currentSection][day]) weeklySchedule[currentSection][day] = [];
                 weeklySchedule[currentSection][day].push({ name, time, hall, prof });
-                localStorage.setItem('bolognaDynamicScheduleV3', JSON.stringify(weeklySchedule));
+                localStorage.setItem('bolognaDynamicScheduleV4', JSON.stringify(weeklySchedule));
                 closeModal('lecture-modal'); renderSchedule(currentActiveDay);
             } else { alert("يرجى ملء جميع الحقول المطلوبة."); }
         }
 
-        function deleteLecture(dayIndex, lecIndex) { if(confirm('هل تريد حذف هذه المحاضرة؟')) { weeklySchedule[currentSection][dayIndex].splice(lecIndex, 1); localStorage.setItem('bolognaDynamicScheduleV3', JSON.stringify(weeklySchedule)); renderSchedule(dayIndex); } }
+        function deleteLecture(dayIndex, lecIndex) { if(confirm('هل تريد حذف هذه المحاضرة؟')) { weeklySchedule[currentSection][dayIndex].splice(lecIndex, 1); localStorage.setItem('bolognaDynamicScheduleV4', JSON.stringify(weeklySchedule)); renderSchedule(dayIndex); } }
         function openAddModal() { document.getElementById('subj-modal-title').innerText = 'إضافة مادة جديدة'; document.getElementById('edit-subj-id').value = ''; document.getElementById('new-subj-name').value = ''; document.getElementById('new-subj-hours').value = '30'; document.getElementById('new-subj-ects').value = '4'; document.getElementById('add-modal').classList.add('active'); }
         function openEditModal(id) { const sub = subjects.find(s => s.id === id); if(!sub) return; document.getElementById('subj-modal-title').innerText = 'تعديل بيانات المادة'; document.getElementById('edit-subj-id').value = sub.id; document.getElementById('new-subj-name').value = sub.name; document.getElementById('new-subj-hours').value = sub.totalHours; document.getElementById('new-subj-ects').value = sub.ects; document.getElementById('add-modal').classList.add('active'); }
         function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); }
@@ -655,7 +688,7 @@
         }
 
         function renderUI() {
-            const container = document.getElementById('subjects-container'); container.innerHTML = '';
+            const container = document.getId ? document.getId('subjects-container') : document.getElementById('subjects-container'); container.innerHTML = '';
             let totalAbs = 0; let dangerCount = 0;
             const sortType = document.getElementById('sort-select').value;
             let sortedSubjects = [...subjects].sort((a, b) => {
